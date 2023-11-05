@@ -57,5 +57,6 @@ jobs:
             docker image ls
 
         - name: Push image to ECR
-          run :
-            docker push $NAME_AND_LATEST_TAG --all-tags
+          run : | 
+            docker push $NAME_AND_LATEST_TAG
+            docker push $NAME_AND_VERSION_TAG
