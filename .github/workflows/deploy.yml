@@ -39,4 +39,4 @@ jobs:
             name_and_version_tag=$proj_name:${{ github.run_number }}.0
             name_and_latest_tag=$ECR_URL/$proj_name:latest
             docker tag $name_and_version_tag $name_and_latest_tag
-            docker push $name_and_latest_tag --all-tags
+            docker image ls
