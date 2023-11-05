@@ -59,4 +59,4 @@ jobs:
         - name: Push image to ECR
           run : | 
             docker push $NAME_AND_LATEST_TAG
-            docker push $NAME_AND_VERSION_TAG
+            docker push $URL_ROOT/$NAME_AND_VERSION_TAG
