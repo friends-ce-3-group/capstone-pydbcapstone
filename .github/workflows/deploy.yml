@@ -1,4 +1,4 @@
-name: CI for webapp
+name: Build and push image to ECR
 
 on: 
   push:
@@ -10,6 +10,7 @@ env:
   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
   AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
   ECR_REGION: "us-west-2"
+  ECR_URL: ${{ vars.ECR_URL_PYDBCAPSTONE }}
 
 jobs:
 
