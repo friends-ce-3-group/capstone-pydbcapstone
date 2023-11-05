@@ -27,7 +27,7 @@ jobs:
             url_split=(${full_url//// })
             echo "URL_ROOT=${url_split[0]}" >> "$GITHUB_ENV"
             echo "PROJ_NAME=${url_split[1]}" >> "$GITHUB_ENV"
-            echo "NAME_AND_VERSION_TAG=${{ env.PROJ_NAME }}:${{ github.run_number }}.0" >> "$GITHUB_ENV"
+            echo 'NAME_AND_VERSION_TAG=$PROJ_NAME:${{ github.run_number }}.0' >> "$GITHUB_ENV"
             echo "NAME_AND_LATEST_TAG=$URL_ROOT/$PROJ_NAME:latest" >> "$GITHUB_ENV"
 
         - name: Show variables
