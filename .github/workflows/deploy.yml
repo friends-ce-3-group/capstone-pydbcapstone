@@ -9,7 +9,6 @@ env:
   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
   AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
-  ECR_REGION: "us-west-2"
   ECR_URL: ${{ vars.ECR_URL_PYDBCAPSTONE }}
 
 jobs:
@@ -23,4 +22,20 @@ jobs:
         - name: Docker version
           run: docker --version
 
-        - run: echo $ECR_URL
+        - name: Build image
+          run: docker build -t pydbcapstone .
+
+        - name: Connect with ECR
+          run: |
+            full_url=$ECR_URL
+            url_split=(${full_url//./ })
+            region=${url_split[3]}
+            aws ecr get-login-password --region $region | docker login --username AWS --password-stdin $ECR_URL
+
+        - name: Build image
+          run: |
+            echo "Run number:" ${{ github.run_number }}
+            docker build -t pydbcapstone .
+
+        # - name: Tag image
+        #   run: docker tag pydbcapstone:latest $ECR_URL/pydbcapstone:latest
