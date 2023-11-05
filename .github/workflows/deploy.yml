@@ -13,34 +13,53 @@ env:
 
 jobs:
 
-  CI:
+  Build_and_push_image:
     runs-on: ubuntu-latest
 
     steps:
         - uses: actions/checkout@v4
-    
-        - name: Connect with ECR
+
+        - name: Set variables
           run: |
             full_url=$ECR_URL
             url_split=(${full_url//./ })
-            region=${url_split[3]}
-            aws ecr get-login-password --region $region | docker login --username AWS --password-stdin $ECR_URL
-
-        - name: Build image
-          run: |
-            full_url=$ECR_URL
+            export REGION=${url_split[3]}
             url_split=(${full_url//// })
-            proj_name=${url_split[1]}
-            echo "Run number:" ${{ github.run_number }}
-            docker build -t $proj_name:${{ github.run_number }}.0 .
+            export PROJ_NAME=${url_split[1]}
+            export URL_ROOT=${url_split[0]}
+            export NAME_AND_VERSION_TAG=$proj_name:${{ github.run_number }}.0
+            export NAME_AND_LATEST_TAG=$url_root/$proj_name:latest
 
-        - name: Add latest tag and push image
+        - name: Show variables
           run: |
-            full_url=$ECR_URL
-            url_split=(${full_url//// })
-            proj_name=${url_split[1]}
-            url_root=${url_split[0]}
-            name_and_version_tag=$proj_name:${{ github.run_number }}.0
-            name_and_latest_tag=$url_root/$proj_name:latest
-            docker tag $name_and_version_tag $name_and_latest_tag
-            docker image ls
+            echo $REGION
+            echo $PROJ_NAME
+            echo $URL_ROOT
+            echo $NAME_AND_VERSION_TAG
+            echo $NAME_AND_LATEST_TAG
+
+        # - name: Connect with ECR
+        #   run: |
+        #     full_url=$ECR_URL
+        #     url_split=(${full_url//./ })
+        #     region=${url_split[3]}
+        #     aws ecr get-login-password --region $region | docker login --username AWS --password-stdin $ECR_URL
+
+        # - name: Build image
+        #   run: |
+        #     full_url=$ECR_URL
+        #     url_split=(${full_url//// })
+        #     proj_name=${url_split[1]}
+        #     echo "Run number:" ${{ github.run_number }}
+        #     docker build -t $proj_name:${{ github.run_number }}.0 .
+
+        # - name: Add latest tag and push image
+        #   run: |
+        #     full_url=$ECR_URL
+        #     url_split=(${full_url//// })
+        #     proj_name=${url_split[1]}
+        #     url_root=${url_split[0]}
+        #     name_and_version_tag=$proj_name:${{ github.run_number }}.0
+        #     name_and_latest_tag=$url_root/$proj_name:latest
+        #     docker tag $name_and_version_tag $name_and_latest_tag
+        #     docker image ls
