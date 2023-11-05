@@ -28,15 +28,12 @@ jobs:
 
         - name: Build image
           run: |
-            echo "Run number:" ${{ github.run_number }}
-            docker build -t pydbcapstone:${{ github.run_number }}.0 .
-
-        - name: Add latest tag and push image
-          run: |
             full_url=$ECR_URL
             url_split=(${full_url//// })
             proj_name=${url_split[1]}
-            name_and_version_tag=$proj_name:${{ github.run_number }}.0
-            name_and_latest_tag=$ECR_URL/$proj_name:latest
-            docker tag $name_and_version_tag $name_and_latest_tag
+            echo "Run number:" ${{ github.run_number }}
+            docker build -t $proj_name:${{ github.run_number }}.0 .
+
+        - name: Add latest tag and push image
+          run: |
             docker image ls
