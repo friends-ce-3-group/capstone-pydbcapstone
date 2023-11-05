@@ -30,7 +30,7 @@ jobs:
 
         - name: Set variables (2)
           run: |
-            echo 'NAME_AND_VERSION_TAG=$PROJ_NAME:${{ github.run_number }}.0' >> "$GITHUB_ENV"
+            echo "NAME_AND_VERSION_TAG=$PROJ_NAME:${{ github.run_number }}.0" >> "$GITHUB_ENV"
             echo "NAME_AND_LATEST_TAG=$URL_ROOT/$PROJ_NAME:latest" >> "$GITHUB_ENV"
 
         - name: Show variables
