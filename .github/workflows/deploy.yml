@@ -23,4 +23,4 @@ jobs:
         - name: Docker version
           run: docker --version
 
-        - run: echo ${{ env.ECR_URL_PYDBCAPSTONE }}
+        - run: echo $ECR_URL
