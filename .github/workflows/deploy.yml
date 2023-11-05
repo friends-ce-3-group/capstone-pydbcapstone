@@ -23,12 +23,12 @@ jobs:
           run: |
             full_url=$ECR_URL
             url_split=(${full_url//./ })
-            export REGION=${url_split[3]}
+            echo "REGION=${url_split[3]}" >> "$GITHUB_ENV"
             url_split=(${full_url//// })
-            export PROJ_NAME=${url_split[1]}
-            export URL_ROOT=${url_split[0]}
-            export NAME_AND_VERSION_TAG=$proj_name:${{ github.run_number }}.0
-            export NAME_AND_LATEST_TAG=$url_root/$proj_name:latest
+            echo "URL_ROOT=${url_split[0]}" >> "$GITHUB_ENV"
+            echo "PROJ_NAME=${url_split[1]}" >> "$GITHUB_ENV"
+            echo "NAME_AND_VERSION_TAG=$PROJ_NAME:${{ github.run_number }}.0" >> "$GITHUB_ENV"
+            echo "NAME_AND_LATEST_TAG=$URL_ROOT/$PROJ_NAME:latest" >> "$GITHUB_ENV"
 
         - name: Show variables
           run: |
