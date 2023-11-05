@@ -43,28 +43,15 @@ jobs:
             echo $NAME_AND_VERSION_TAG
             echo $NAME_AND_LATEST_TAG
 
-        # - name: Connect with ECR
-        #   run: |
-        #     full_url=$ECR_URL
-        #     url_split=(${full_url//./ })
-        #     region=${url_split[3]}
-        #     aws ecr get-login-password --region $region | docker login --username AWS --password-stdin $ECR_URL
+        - name: Connect with ECR
+          run: |
+            aws ecr get-login-password --region $REGION | docker login --username AWS --password-stdin $ECR_URL
 
-        # - name: Build image
-        #   run: |
-        #     full_url=$ECR_URL
-        #     url_split=(${full_url//// })
-        #     proj_name=${url_split[1]}
-        #     echo "Run number:" ${{ github.run_number }}
-        #     docker build -t $proj_name:${{ github.run_number }}.0 .
+        - name: Build image
+          run: |
+            docker build -t $NAME_AND_VERSION_TAG .
 
-        # - name: Add latest tag and push image
-        #   run: |
-        #     full_url=$ECR_URL
-        #     url_split=(${full_url//// })
-        #     proj_name=${url_split[1]}
-        #     url_root=${url_split[0]}
-        #     name_and_version_tag=$proj_name:${{ github.run_number }}.0
-        #     name_and_latest_tag=$url_root/$proj_name:latest
-        #     docker tag $name_and_version_tag $name_and_latest_tag
-        #     docker image ls
+        - name: Add latest tag
+          run: |
+            docker tag $NAME_AND_VERSION_TAG $NAME_AND_LATEST_TAG
+            docker image ls
