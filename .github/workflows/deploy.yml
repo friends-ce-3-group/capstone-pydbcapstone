@@ -31,7 +31,7 @@ jobs:
 
         - name: Set variables (2)
           run: |
-            echo "NAME_AND_VERSION_TAG=$PROJ_NAME:$VERSION" >> "$GITHUB_ENV"
+            echo "NAME_AND_VERSION_TAG=$URL_ROOT/$PROJ_NAME:$VERSION" >> "$GITHUB_ENV"
             echo "NAME_AND_LATEST_TAG=$URL_ROOT/$PROJ_NAME:latest" >> "$GITHUB_ENV"
 
         - name: Show variables
@@ -59,4 +59,4 @@ jobs:
         - name: Push image to ECR
           run : | 
             docker push $NAME_AND_LATEST_TAG
-            docker push $URL_ROOT/$NAME_AND_VERSION_TAG
+            docker push $NAME_AND_VERSION_TAG
