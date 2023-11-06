@@ -1,35 +1,19 @@
 # app.py
-from flask import Flask, request
+from flask import Flask, request, json
 
 app = Flask(__name__)
 
-@app.route('/api/healthcheck', methods=['GET'])
-def healthcheck():
-    return "healthcheck"
+import cardsCatalog
 
-@app.route('/api/cardsCatalog', methods=['GET'])
-def cardsCatalog():
-    return "cardsCatalog"
+import createCard
 
-@app.route('/api/createCard', methods=['POST'])
-def createCard():
-    return "createCard"
+import getCard
 
-@app.route('/api/signCard', methods=['POST'])
-def signCard():
-    return "signCard"
+import getMessages
 
-@app.route('/api/getCard', methods=['GET'])
-def getCard():
-    cardId = request.args.get('cardId')
-    return "getCard; cardId = {0}".format(cardId)
+import healthcheck
 
-@app.route('/api/getMessages', methods=['GET'])
-def getMessages():
-    cardId = request.args.get('cardId')
-    return "getMessages; cardId = {0}".format(cardId)
-
-
+import signCard
 
 
 if __name__ == '__main__':
