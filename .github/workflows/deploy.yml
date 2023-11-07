@@ -65,7 +65,6 @@ jobs:
           with:
             owner: friends-ce-3-group
             repo: capstone-ecs 
-            github_user: lowcheemeng02
             workflow_file_name: update_infra.yml
             github_token: ${{ secrets.ACCESS_TOKEN }}
             ref: main
