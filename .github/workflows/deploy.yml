@@ -8,7 +8,6 @@ on:
 env:
   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-  ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
   ECR_URL: ${{ vars.ECR_URL_PYDBCAPSTONE }}
 
 jobs:
@@ -64,8 +63,9 @@ jobs:
         - name: Trigger ECS to pull new image
           uses: convictional/trigger-workflow-and-wait@v1.6.1
           with:
-            owner: lowcheemeng02
+            owner: friends-ce-3-group
             repo: capstone-ecs 
+            github_user: lowcheemeng02
             workflow_file_name: update_infra.yml
             github_token: ${{ secrets.ACCESS_TOKEN }}
             ref: main
