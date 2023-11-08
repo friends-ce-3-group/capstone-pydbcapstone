@@ -17,8 +17,8 @@ def testdb():
         rds_port = instances.get('DBInstances')[0].get('Endpoint').get('Port')
 
         data = { "Address" : rds_host, "Port" : rds_port }
-    except:
-        data = {}
+    except BaseException as e:
+        data = { "Error" : str(e) }
 
     response = app.response_class(response=json.dumps(data),
                                   status=200,
