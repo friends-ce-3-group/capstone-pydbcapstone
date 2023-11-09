@@ -20,18 +20,21 @@ def createTable():
 
     endpoint = data["endpoint"]
 
-    connection = mysql.connector.connect(
-        host=endpoint,
-        user="admin",
-        password="password",
-    )
+    try:
+        connection = mysql.connector.connect(
+            host=endpoint,
+            user="admin",
+            password="password",
+        )
 
-    cursor = connection.cursor()
+        cursor = connection.cursor()
 
-    cursor.execute("CREATE TABLE CardsTemp (id VARCHAR(255), imageKey VARCHAR(255), imageCategory VARCHAR(255))")
-    result = cursor.fetchall()
+        cursor.execute("CREATE TABLE CardsTemp (id VARCHAR(255), imageKey VARCHAR(255), imageCategory VARCHAR(255))")
+        result = cursor.fetchall()
 
-    connection.close()
+        connection.close()
+    except Exception as e:
+        result = e
 
     response = app.response_class(response=json.dumps(result),
                                 status=200,
