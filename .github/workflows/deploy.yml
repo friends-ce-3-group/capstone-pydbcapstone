@@ -70,7 +70,7 @@ jobs:
           with:
             owner: friends-ce-3-group
             repo: capstone-ecs 
-            workflow_file_name: crud_api.yml
+            workflow_file_name: crud_api_ci.yml
             github_token: ${{ secrets.ACCESS_TOKEN }}
             ref: main
             wait_interval: 10
