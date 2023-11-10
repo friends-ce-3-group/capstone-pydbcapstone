@@ -24,11 +24,9 @@ jobs:
             files: '["**/*.toml"]'
           env:
             CDN: https://somecdn.com/...
-            DBENDPOINT: ${{ vars.RDS_ENDPOINT_ADDRESS }}
-            DBUSERNAME: ${{ secrets.DB_USERNAME }}
-            DBPASSWORD: ${{ secrets.DB_PASSWORD }}
-
-        - run: cat config.toml
+            ENDPOINT: ${{ vars.RDS_ENDPOINT_ADDRESS }}
+            DBUSER: ${{ secrets.DB_USERNAME }}
+            DBPASS: ${{ secrets.DB_PASSWORD }}
 
         # - name: Set variables (1)
         #   run: |

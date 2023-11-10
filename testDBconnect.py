@@ -15,10 +15,13 @@ def testdb():
 
 @app.route('/api/testConfig', methods=['GET'])
 def testConfig():
-    app.config
-    response = app.response_class(response=json.dumps(app.config),
+    data = {}
+    data["ENDPOINT"] = app.config["ENDPOINT"]
+
+    response = app.response_class(response=json.dumps(data),
                                   status=200,
                                   mimetype='application/json')
+    
     return response
 
 # @app.route('/api/createTable', methods=['GET'])
