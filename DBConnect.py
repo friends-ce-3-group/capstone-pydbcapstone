@@ -20,5 +20,8 @@ class DBConnector:
 
         return result
     
-    
+    def __del__(self):
+        self.connection.close()
+
+
 dbConnector = DBConnector(app)
