@@ -13,31 +13,38 @@ def testdb():
     
     return response
 
-
-@app.route('/api/createTable', methods=['GET'])
-def createTable():
-    data = getEndPoint.get_rds_endpoint()
-
-    endpoint = data["endpoint"]
-
-    try:
-        connection = mysql.connector.connect(
-            host=endpoint,
-            user="admin",
-            password="password",
-        )
-
-        # cursor = connection.cursor()
-
-        # cursor.execute("CREATE TABLE CardsTemp (id VARCHAR(255), imageKey VARCHAR(255), imageCategory VARCHAR(255))")
-        # result = cursor.fetchall()
-
-        # connection.close()
-    except Exception as e:
-        result = e
-
-    response = app.response_class(response=json.dumps(result),
-                                status=200,
-                                mimetype='application/json')
-
+@app.route('/api/testConfig', methods=['GET'])
+def testConfig():
+    app.config
+    response = app.response_class(response=json.dumps(app.config),
+                                  status=200,
+                                  mimetype='application/json')
     return response
+
+# @app.route('/api/createTable', methods=['GET'])
+# def createTable():
+#     data = getEndPoint.get_rds_endpoint()
+
+#     endpoint = data["endpoint"]
+
+#     try:
+#         connection = mysql.connector.connect(
+#             host=endpoint,
+#             user="admin",
+#             password="password",
+#         )
+
+#         # cursor = connection.cursor()
+
+#         # cursor.execute("CREATE TABLE CardsTemp (id VARCHAR(255), imageKey VARCHAR(255), imageCategory VARCHAR(255))")
+#         # result = cursor.fetchall()
+
+#         # connection.close()
+#     except Exception as e:
+#         result = e
+
+#     response = app.response_class(response=json.dumps(result),
+#                                 status=200,
+#                                 mimetype='application/json')
+
+#     return response
