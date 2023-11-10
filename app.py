@@ -1,6 +1,5 @@
 # app.py
 from flask import Flask, request, json
-import toml
 
 app = Flask(__name__)
 app.config.from_pyfile("config.py")
