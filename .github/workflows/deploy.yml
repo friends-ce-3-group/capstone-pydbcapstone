@@ -21,7 +21,7 @@ jobs:
 
         - uses: cschleiden/replace-tokens@v1
           with:
-            files: '["**/*.toml"]'
+            files: '["**/.env"]'
           env:
             CDN: https://somecdn.com/...
             ENDPOINT: ${{ vars.RDS_ENDPOINT_ADDRESS }}
