@@ -19,60 +19,71 @@ jobs:
     steps:
         - uses: actions/checkout@v4
 
-        - name: Set variables (1)
-          run: |
-            full_url=$ECR_URL
-            url_split=(${full_url//./ })
-            echo "REGION=${url_split[3]}" >> "$GITHUB_ENV"
-            url_split=(${full_url//// })
-            echo "URL_ROOT=${url_split[0]}" >> "$GITHUB_ENV"
-            echo "PROJ_NAME=${url_split[1]}" >> "$GITHUB_ENV"
-            echo "VERSION=0.${{ github.run_number }}.0" >> "$GITHUB_ENV"
-
-        - name: Set variables (2)
-          run: |
-            echo "NAME_AND_VERSION_TAG=$URL_ROOT/$PROJ_NAME:$VERSION" >> "$GITHUB_ENV"
-            echo "NAME_AND_LATEST_TAG=$URL_ROOT/$PROJ_NAME:latest" >> "$GITHUB_ENV"
-
-        - name: Show variables
-          run: |
-            echo $REGION
-            echo $PROJ_NAME
-            echo $URL_ROOT
-            echo $VERSION
-            echo $NAME_AND_VERSION_TAG
-            echo $NAME_AND_LATEST_TAG
-
-        - name: Connect with ECR
-          run: |
-            aws ecr get-login-password --region $REGION | docker login --username AWS --password-stdin $ECR_URL
-
-        - name: Build image
-          run: |
-            docker build -t $NAME_AND_VERSION_TAG .
-
-        - name: Add latest tag
-          run: |
-            docker tag $NAME_AND_VERSION_TAG $NAME_AND_LATEST_TAG
-            docker image ls
-
-        - name: Push image to ECR
-          run : | 
-            docker push $NAME_AND_LATEST_TAG
-            docker push $NAME_AND_VERSION_TAG
-
-        - name: Update container image tag to use in ECS
-          run: |
-            curl -L -X PATCH -H "Accept: application/vnd.github+json" -H "Authorization: Bearer $ACCESS_TOKEN" -H "X-GitHub-Api-Version: 2022-11-28" https://api.github.com/orgs/friends-ce-3-group/actions/variables/PYDBCAPSTONE_IMAGE_VER_LATEST -d '{"name":"PYDBCAPSTONE_IMAGE_VER_LATEST","value":"'$NAME_AND_VERSION_TAG'","visibility":"all"}'
-
-        - name: Trigger ECS to pull new image
-          uses: convictional/trigger-workflow-and-wait@v1.6.1
+        - uses: cschleiden/replace-tokens@v1
           with:
-            owner: friends-ce-3-group
-            repo: capstone-ecs 
-            workflow_file_name: crud_api_ci.yml
-            github_token: ${{ secrets.ACCESS_TOKEN }}
-            ref: main
-            wait_interval: 10
-            trigger_workflow: true
-            wait_workflow: true
+            files: '["**/*.toml"]'
+          env:
+            CDN: https://somecdn.com/...
+            DBENDPOINT: ${{ vars.RDS_ENDPOINT_ADDRESS }}
+            DBUSERNAME: ${{ secrets.DB_USERNAME }}
+            DBPASSWORD: ${{ secrets.DB_PASSWORD }}
+
+        - run: cat config.toml
+
+        # - name: Set variables (1)
+        #   run: |
+        #     full_url=$ECR_URL
+        #     url_split=(${full_url//./ })
+        #     echo "REGION=${url_split[3]}" >> "$GITHUB_ENV"
+        #     url_split=(${full_url//// })
+        #     echo "URL_ROOT=${url_split[0]}" >> "$GITHUB_ENV"
+        #     echo "PROJ_NAME=${url_split[1]}" >> "$GITHUB_ENV"
+        #     echo "VERSION=0.${{ github.run_number }}.0" >> "$GITHUB_ENV"
+
+        # - name: Set variables (2)
+        #   run: |
+        #     echo "NAME_AND_VERSION_TAG=$URL_ROOT/$PROJ_NAME:$VERSION" >> "$GITHUB_ENV"
+        #     echo "NAME_AND_LATEST_TAG=$URL_ROOT/$PROJ_NAME:latest" >> "$GITHUB_ENV"
+
+        # - name: Show variables
+        #   run: |
+        #     echo $REGION
+        #     echo $PROJ_NAME
+        #     echo $URL_ROOT
+        #     echo $VERSION
+        #     echo $NAME_AND_VERSION_TAG
+        #     echo $NAME_AND_LATEST_TAG
+
+        # - name: Connect with ECR
+        #   run: |
+        #     aws ecr get-login-password --region $REGION | docker login --username AWS --password-stdin $ECR_URL
+
+        # - name: Build image
+        #   run: |
+        #     docker build -t $NAME_AND_VERSION_TAG .
+
+        # - name: Add latest tag
+        #   run: |
+        #     docker tag $NAME_AND_VERSION_TAG $NAME_AND_LATEST_TAG
+        #     docker image ls
+
+        # - name: Push image to ECR
+        #   run : | 
+        #     docker push $NAME_AND_LATEST_TAG
+        #     docker push $NAME_AND_VERSION_TAG
+
+        # - name: Update container image tag to use in ECS
+        #   run: |
+        #     curl -L -X PATCH -H "Accept: application/vnd.github+json" -H "Authorization: Bearer $ACCESS_TOKEN" -H "X-GitHub-Api-Version: 2022-11-28" https://api.github.com/orgs/friends-ce-3-group/actions/variables/PYDBCAPSTONE_IMAGE_VER_LATEST -d '{"name":"PYDBCAPSTONE_IMAGE_VER_LATEST","value":"'$NAME_AND_VERSION_TAG'","visibility":"all"}'
+
+        # - name: Trigger ECS to pull new image
+        #   uses: convictional/trigger-workflow-and-wait@v1.6.1
+        #   with:
+        #     owner: friends-ce-3-group
+        #     repo: capstone-ecs 
+        #     workflow_file_name: crud_api_ci.yml
+        #     github_token: ${{ secrets.ACCESS_TOKEN }}
+        #     ref: main
+        #     wait_interval: 10
+        #     trigger_workflow: true
+        #     wait_workflow: true

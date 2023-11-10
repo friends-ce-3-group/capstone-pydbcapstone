@@ -1,0 +1,5 @@
+[database]
+endpoint = #{DBENDPOINT}#
+user = #{DBUSERNAME}#
+password = #{DBPASSWORD}#
+
