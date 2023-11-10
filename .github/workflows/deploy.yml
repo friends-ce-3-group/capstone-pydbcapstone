@@ -25,7 +25,6 @@ jobs:
           with:
             files: '["**/.env"]'
           env:
-            CDN: https://somecdn.com/...
             ENDPOINT: ${{ vars.RDS_ENDPOINT_ADDRESS }}
             DBUSER: ${{ secrets.DB_USERNAME }}
             DBPASS: ${{ secrets.DB_PASSWORD }}
