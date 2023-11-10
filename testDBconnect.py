@@ -17,6 +17,8 @@ def testdb():
 def testConfig():
     data = {}
     data["ENDPOINT"] = app.config["ENDPOINT"]
+    data["DBUSER"] = app.config["DBUSER"]
+    data["DBPASS"] = app.config["DBPASS"]
 
     response = app.response_class(response=json.dumps(data),
                                   status=200,
