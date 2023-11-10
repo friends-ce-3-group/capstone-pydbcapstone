@@ -1,5 +1,5 @@
 [database]
 endpoint = #{DBENDPOINT}#
-user = #{DBUSERNAME}#
-password = #{DBPASSWORD}#
+dbuser = #{DBUSERNAME}#
+dbpw = #{DBPASSWORD}#
 
