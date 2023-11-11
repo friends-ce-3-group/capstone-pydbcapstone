@@ -8,7 +8,7 @@ from DBConnect import dbConnector
 @app.route('/api/cardsCatalog', methods=['GET'])
 def cardsCatalog():
 
-    query = """SELECT * FROM CardsCatalog"""
+    query = """SELECT * FROM cardsCatalog"""
 
     result = dbConnector.read(query)
 
