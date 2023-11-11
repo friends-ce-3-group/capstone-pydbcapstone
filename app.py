@@ -2,9 +2,9 @@
 from flask import Flask, Request
 
 app = Flask(__name__)
-app.config.from_pyfile("config.py") # run this before any of the other imports
+app.config.from_pyfile("config.py") # run this before any of the other imports to set up the configuration data
 
-import DBConnect
+import DBConnect # run this to initialize the DB
 
 import cardsCatalog
 
