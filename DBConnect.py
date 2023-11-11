@@ -10,12 +10,9 @@ class DBConnector:
             database=app.config["DBNAME"]
         )
 
-        self.cursor = self.connection.cursor()
-
-
-    def execute(self, query):
-        self.cursor.execute(query)
-
+    def read(self, query):
+        cursor = self.connection.cursor()
+        cursor.execute(query)
         result = self.cursor.fetchall()
 
         return result
