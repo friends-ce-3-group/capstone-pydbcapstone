@@ -2,7 +2,7 @@
 from flask import Flask, request, json
 
 app = Flask(__name__)
-app.config.from_pyfile("config.py")
+app.config.from_pyfile("config.py") # run this before any of the other imports
 
 import cardsCatalog
 
