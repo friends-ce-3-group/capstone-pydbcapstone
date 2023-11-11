@@ -19,9 +19,9 @@ class DBConnector:
         result = self.cursor.fetchall()
 
         return result
-    
-    def __del__(self):
-        self.connection.close()
+
+    # def __del__(self):
+    #     self.connection.close()
 
 
 dbConnector = DBConnector(app)
