@@ -1,8 +1,11 @@
-from app import app, request
+
+from app import app
 import json
 
 @app.route('/api/getCard', methods=['GET']) # Flask returns status code 405: The method is not allowed if method is not GET
 def getCard():
+    from app import request
+    
     cardId = request.args.get('cardId')
     
     data = { 

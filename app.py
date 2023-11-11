@@ -1,5 +1,5 @@
 # app.py
-from flask import Flask, Request
+from flask import Flask
 
 app = Flask(__name__)
 app.config.from_pyfile("config.py") # run this before any of the other imports to set up the configuration data
@@ -8,17 +8,17 @@ import DBConnect # run this to initialize the DB
 
 import cardsCatalog
 
-import createCard
+# import createCard
 
-import getCard
+# import getCard
 
-import getMessages
+# import getMessages
 
-import healthcheck
+# import healthcheck
 
-import signCard
+# import signCard
 
-import testDBconnect
+# import testDBconnect
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')

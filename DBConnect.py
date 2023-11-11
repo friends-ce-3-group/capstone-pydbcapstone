@@ -1,4 +1,4 @@
-from app import app
+from app import app as flaskapp
 import mysql.connector
 
 class DBConnector:
@@ -19,4 +19,4 @@ class DBConnector:
 
 
 
-dbConnector = DBConnector(app)
+dbConnector = DBConnector(flaskapp)

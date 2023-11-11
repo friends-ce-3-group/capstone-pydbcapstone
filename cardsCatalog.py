@@ -3,8 +3,6 @@ import json
 from DBConnect import dbConnector
 
 
-
-
 @app.route('/api/cardsCatalog', methods=['GET'])
 def cardsCatalog():
 
