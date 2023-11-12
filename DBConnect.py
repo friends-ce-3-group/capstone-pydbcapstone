@@ -1,22 +1,21 @@
-from app import app as flaskapp
+from app import app
 import mysql.connector
 
-class DBConnector:
-    def __init__(self, app):
-        self.connection = mysql.connector.connect(
-            host=app.config["ENDPOINT"],
-            user=app.config["DBUSER"],
-            password=app.config["DBPASS"],
-            database=app.config["DBNAME"]
-        )
 
-    def read(self, query):
-        cursor = self.connection.cursor()
-        cursor.execute(query)
-        result = self.cursor.fetchall()
+def db_read(query):
+    
+    connection = mysql.connector.connect(
+        host=app.config["ENDPOINT"],
+        user=app.config["DBUSER"],
+        password=app.config["DBPASS"],
+        database=app.config["DBNAME"]
+    )
+    cursor = connection.cursor()
+    
+    cursor.execute(query)
 
-        return result
+    result = cursor.fetchall()
 
+    connection.close()
 
-
-dbConnector = DBConnector(flaskapp)
+    return result
