@@ -1,14 +1,14 @@
-from app import app, dbConnector as db
 import json
-# from DBConnect import dbConnector
-
+from app import app
 
 @app.route('/api/cardsCatalog', methods=['GET'])
 def cardsCatalog():
 
+    from DBConnect import db_read
+
     query = """SELECT * FROM cardsCatalog"""
 
-    result = db.read(query)
+    result = db_read(query)
 
     response = app.response_class(response=json.dumps(result),
                                 status=200,
