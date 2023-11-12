@@ -22,7 +22,23 @@ class DBConnect:
 
         result = cursor.fetchall()
 
+        cursor.close()
+
         return result
+
+    def get_table_columns(self,tablename : str) -> list:
+        cursor = self.connection.cursor()
+
+        try:
+            cursor.execute("SHOW COLUMNS FROM {}".format(tablename))
+            columns = cursor.fetchall()
+        except:
+            columns = []
+        
+        cursor.close()
+        
+        return columns
+
 
     def __del__(self):
         self.connection.close()
