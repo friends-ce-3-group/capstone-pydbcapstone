@@ -14,8 +14,12 @@ def getCard():
     data = {}
     status_code = 500
 
+    print(query)
+
     try:
         result = db.read(query)
+        print(result)
+        
         if result:
             if len(result) == 1: 
                 # single entry found, which is what we expect
@@ -24,6 +28,8 @@ def getCard():
 
                 columns = db.get_table_columns(CONST_TABLENAME)
     
+                print(columns)
+
                 for col, entry in zip(columns, result[0]):
                     key_name = col[0]
                     data[key_name] = entry
