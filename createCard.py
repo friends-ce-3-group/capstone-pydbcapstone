@@ -47,7 +47,7 @@ def createCard():
 
 
     response = app.response_class(response=json.dumps(data),
-                                  status=200,
+                                  status=status_code,
                                   mimetype='application/json')
     
     return response
