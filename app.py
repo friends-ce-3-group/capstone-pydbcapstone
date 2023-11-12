@@ -76,7 +76,7 @@ import cardsCatalog
 
 # import createCard
 
-# import getCard
+import getCard
 
 # import getMessages
 
