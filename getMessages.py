@@ -21,28 +21,32 @@ def getMessages():
 
         if result:
             if len(result) == 1: 
-                # single entry found, which is what we expect
 
                 status_code = 200 
 
                 columns = db.get_table_columns(CONST_TABLENAME)
     
-                # print(columns)
-
                 for col, entry in zip(columns, result[0]):
                     key_name = col[0]
                     data[key_name] = entry
             
-            else: 
-                # more than one entry found. how to deal with this?
-                raise ValueError('More than one entry found for the given cardId {}.'.format(cardId))
+            else:
+                columns = db.get_table_columns(CONST_TABLENAME)
+
+                for idx, found in enumerate(result):
+                    entry_data = {}
+                    for col, entry in zip(columns, found):
+                        key_name = col[0]
+                        entry_data[key_name] = entry
+
+                    data[idx] = entry_data
             
         else:
             # query returns nothing
             raise ValueError('No entry found for cardId {}.'.format(cardId))
         
     except Exception as err:
-        data = { "Error": err } # something is wrong with the query, either it returns nothing or it returns more than one entry
+        data = { "Error": str(err) } # something is wrong with the query, either it returns nothing or it returns more than one entry
 
 
 

@@ -42,7 +42,7 @@ def getCard():
             raise ValueError('No entry found for cardId {}.'.format(cardId))
         
     except Exception as err:
-        data = { "Error": err } # something is wrong with the query, either it returns nothing or it returns more than one entry
+        data = { "Error": str(err) } # something is wrong with the query, either it returns nothing or it returns more than one entry
 
 
 

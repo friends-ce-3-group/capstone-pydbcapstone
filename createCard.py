@@ -41,7 +41,7 @@ def createCard():
             raise ValueError('Unable to create card.')
             
     except Exception as err:
-        data = { "Error": err } # something is wrong with the query, either it returns nothing or it returns more than one entry
+        data = { "Error": str(err) } # something is wrong with the query, either it returns nothing or it returns more than one entry
 
 
     response = app.response_class(response=json.dumps(data),
