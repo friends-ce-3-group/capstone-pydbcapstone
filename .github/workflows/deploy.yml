@@ -28,6 +28,7 @@ jobs:
             ENDPOINT: ${{ vars.RDS_ENDPOINT_ADDRESS }}
             DBUSER: ${{ secrets.DB_USERNAME }}
             DBPASS: ${{ secrets.DB_PASSWORD }}
+            DBNAME: ${{ vars.RDS_DBNAME }}
 
         - name: Set variables (1)
           run: |
