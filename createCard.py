@@ -6,19 +6,21 @@ import json
 def createCard():
     CONST_TABLENAME = "Cards"
 
-    id = str(request.args.get('id'))
-    imageKey = str(request.args.get('imageKey'))
-    imageCategory = str(request.args.get('imageCategory'))
-    imagePath = str(request.args.get('imagePath'))
-    imageBackgroundColor = str(request.args.get('imageBackgroundColor'))
-    recipientName = str(request.args.get('recipientName'))
-    recipientEmail = str(request.args.get('recipientEmail'))
-    senderName = str(request.args.get('senderName'))
-    senderEmail = str(request.args.get('senderEmail'))
-    sendDate = str(request.args.get('sendDate'))
-    sendTime = str(request.args.get('sendTime'))
-    sendTimezone = str(request.args.get('sendTimezone'))
-    createdDataTime = str(request.args.get('createdDataTime'))
+    input = request.get_json()
+
+    id = input['id']
+    imageKey = input['imageKey']
+    imageCategory = input['imageCategory']
+    imagePath = input['imagePath']
+    imageBackgroundColor = input['imageBackgroundColor']
+    recipientName = input['recipientName']
+    recipientEmail = input['recipientEmail']
+    senderName = input['senderName']
+    senderEmail = input['senderEmail']
+    sendDate = input['sendDate']
+    sendTime = input['sendTime']
+    sendTimezone = input['sendTimezone']
+    createdDataTime = input['createdDataTime']
     
     query = """INSERT INTO {} 
     (id, imageKey, imageCategory, imagePath, imageBackgroundColor, recipientName, recipientEmail, senderName, 
