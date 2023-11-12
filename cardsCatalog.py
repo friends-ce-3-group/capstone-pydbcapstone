@@ -6,16 +6,19 @@ def cardsCatalog():
 
     query = """SELECT * FROM cardsCatalog"""
 
-    result = {}
+    data = {}
+    status_code = 500
 
     try:
-        result = db.read(query)
-        status_code = 200
-    except Exception as err:
-        result = err
-        status_code = 400 # The request could not be understood by the server due to incorrect syntax
+        data = db.read(query)
 
-    response = app.response_class(response=json.dumps(result),
+        status_code = 200
+
+    except Exception as err:
+        data = { "Error": str(err) }
+
+
+    response = app.response_class(response=json.dumps(data),
                                 status=status_code,
                                 mimetype='application/json')
 
