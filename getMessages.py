@@ -1,13 +1,53 @@
-from app import app, request
+from app import db, app
+from flask import request
 import json
 
 @app.route('/api/getMessages', methods=['GET'])
 def getMessages():
-    data = {
-        "message":"how to reliably update this? Almost there...? Using version tag."
-    }
+    CONST_TABLENAME = "Messages"
+
+    cardId = str(request.args.get('cardId'))
+
+    query = "SELECT * FROM {0} WHERE id = {1}".format(CONST_TABLENAME, cardId)
+
+    data = {}
+    status_code = 500
+
+    # print(query)
+
+    try:
+        result = db.read(query)
+        # print(result)
+
+        if result:
+            if len(result) == 1: 
+                # single entry found, which is what we expect
+
+                status_code = 200 
+
+                columns = db.get_table_columns(CONST_TABLENAME)
+    
+                # print(columns)
+
+                for col, entry in zip(columns, result[0]):
+                    key_name = col[0]
+                    data[key_name] = entry
+            
+            else: 
+                # more than one entry found. how to deal with this?
+                raise ValueError('More than one entry found for the given cardId {}.'.format(cardId))
+            
+        else:
+            # query returns nothing
+            raise ValueError('No entry found for cardId {}.'.format(cardId))
+        
+    except Exception as err:
+        data = { "Error": err } # something is wrong with the query, either it returns nothing or it returns more than one entry
+
+
+
     response = app.response_class(response=json.dumps(data),
-                                  status=200,
-                                  mimetype='application/json')
+                                status=status_code,
+                                mimetype='application/json')
     
     return response
