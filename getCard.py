@@ -34,9 +34,16 @@ def getCard():
                     data[key_name] = entry
             
             else: 
-                # more than one entry found. how to deal with this?
-                raise ValueError('More than one entry found for the given cardId {}.'.format(cardId))
-            
+                columns = db.get_table_columns(CONST_TABLENAME)
+
+                for idx, found in enumerate(result):
+                    entry_data = {}
+                    for col, entry in zip(columns, found):
+                        key_name = col[0]
+                        entry_data[key_name] = entry
+
+                    data[idx] = entry_data
+
         else:
             # query returns nothing
             raise ValueError('No entry found for cardId {}.'.format(cardId))
