@@ -24,6 +24,11 @@ class DBConnect:
 
         return result
 
+    def __del__(self):
+        self.connection.close()
+
+
+
 db = DBConnect(app)
 
 
