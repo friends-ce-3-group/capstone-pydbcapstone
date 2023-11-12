@@ -64,7 +64,7 @@ import cardsCatalog
 
 # import getMessages
 
-# import healthcheck
+import healthcheck
 
 # import signCard
 
