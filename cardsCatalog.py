@@ -6,7 +6,7 @@ def cardsCatalog():
 
     query = """SELECT * FROM cardsCatalog"""
 
-    result = []
+    result = {}
 
     try:
         result = db.read(query)
