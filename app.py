@@ -26,6 +26,19 @@ class DBConnect:
 
         return result
 
+    def write(self, query : str) -> list:
+        cursor = self.connection.cursor()
+        
+        cursor.execute(query)
+        
+        self.connection.commit()
+        
+        result = cursor.fetchall()
+        
+        cursor.close()
+
+        return result
+
     def get_table_columns(self,tablename : str) -> list:
         cursor = self.connection.cursor()
 
@@ -55,9 +68,7 @@ import getCard
 
 import getMessages
 
-
-
-# import createCard
+import createCard
 
 
 
