@@ -7,23 +7,23 @@ def signCard():
     CONST_TABLENAME = "Messages"
 
     input = request.get_json()
-
-    id = input['id']
-    cardId = input['cardId']
-    name = input['name']
-    message = input['message']
-    wordCount = input['wordCount']
-    createdDateTime = input['createdDateTime']
-
-    query = """INSERT INTO {} 
-    (id, cardId, name, message, wordCount, createdDateTime) 
-    VALUES ('{}', '{}', '{}', '{}', '{}', '{}')""".format(CONST_TABLENAME, 
-        id, cardId, name, message, wordCount, createdDateTime)
-
-    data = {}
-    status_code = 500
-
+    
     try:
+        id = input['id']
+        cardId = input['cardId']
+        name = input['name']
+        message = input['message']
+        wordCount = input['wordCount']
+        createdDateTime = input['createdDateTime']
+
+        query = """INSERT INTO {} 
+        (id, cardId, name, message, wordCount, createdDateTime) 
+        VALUES ('{}', '{}', '{}', '{}', '{}', '{}')""".format(CONST_TABLENAME, 
+            id, cardId, name, message, wordCount, createdDateTime)
+
+        data = {}
+        status_code = 500
+    
         result = db.write(query)
 
         if len(result) == 0:
