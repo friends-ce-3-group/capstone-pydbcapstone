@@ -1,5 +1,5 @@
-from app import db, app
-import cors
+from app import db, app, request
+from cors import cors_preflight_response
 import json
 import statuscodes
 import tablenames
