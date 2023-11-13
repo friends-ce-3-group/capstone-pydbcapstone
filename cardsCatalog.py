@@ -1,6 +1,6 @@
 from app import db, app
 from flask import request
-from cors import cors_preflight_response
+from cors import cors_preflight_response, cors_response
 import json
 import statuscodes
 import tablenames
@@ -33,4 +33,4 @@ def cardsCatalog():
                                     status=status_code,
                                     mimetype='application/json')
 
-        return response
+        return cors_response(response)
