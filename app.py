@@ -53,30 +53,30 @@ class DBConnect:
         return columns
 
     def processed_read_data(self, tablename : str, query : str) -> dict:
+
+        # helper function
+        #---------------------------------------------------------
+        def populate(columns, found):
+            entry_data = {}
+            for col, entry in zip(columns, found):
+                key_name = col[0]
+                entry_data[key_name] = entry
+            return entry_data
+        #---------------------------------------------------------
+
         data = {}
         status_code = statuscodes.STATUS_ERR
 
         result = db.read(query)
 
         if result:
+            columns = db.get_table_columns(tablename)
+
             if len(result) == 1: 
-
-                columns = db.get_table_columns(tablename)
-    
-                for col, entry in zip(columns, result[0]):
-                    key_name = col[0]
-                    data[key_name] = entry
-
+                data = populate(columns, result[0])
             else:
-                columns = db.get_table_columns(tablename)
-
                 for idx, found in enumerate(result):
-                    entry_data = {}
-                    for col, entry in zip(columns, found):
-                        key_name = col[0]
-                        entry_data[key_name] = entry
-
-                    data[idx] = entry_data
+                    data[idx] = populate(columns, found)
 
             status_code = statuscodes.STATUS_OK
 
