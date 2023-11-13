@@ -10,3 +10,7 @@ def cors_preflight_response():
     response.headers.add("Access-Control-Allow-Methods", "*")
     
     return response
+
+def cors_response(response):
+    response.headers.add("Access-Control-Allow-Origin", "*")
+    return response
