@@ -1,6 +1,6 @@
 from app import db, app
 from flask import request
-from cors import cors_preflight_response
+from cors import cors_preflight_response, cors_response
 import json
 import statuscodes
 import tablenames
