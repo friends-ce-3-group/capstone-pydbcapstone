@@ -16,7 +16,7 @@ def getCard():
 
         cardId = str(request.args.get('cardId'))
 
-        query = "SELECT * FROM {0} WHERE cardId = '{1}'".format(CONST_TABLENAME, cardId)
+        query = "SELECT * FROM {0} WHERE id = '{1}'".format(CONST_TABLENAME, cardId)
 
         data = {}
         status_code = statuscodes.STATUS_ERR
