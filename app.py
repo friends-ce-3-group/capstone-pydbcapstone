@@ -1,7 +1,7 @@
 # app.py
 from flask import Flask
 from mysql import connector
-import json
+import statuscodes
 
 app = Flask(__name__)
 app.config.from_pyfile("config.py") # run this before any of the other imports to set up the configuration data
@@ -54,7 +54,7 @@ class DBConnect:
 
     def processed_read_data(self, tablename : str, query : str) -> dict:
         data = {}
-        status_code = 500
+        status_code = statuscodes.STATUS_ERR
 
         result = db.read(query)
 
@@ -78,7 +78,7 @@ class DBConnect:
 
                     data[idx] = entry_data
 
-            status_code = 200
+            status_code = statuscodes.STATUS_OK
 
 
         return data, status_code
