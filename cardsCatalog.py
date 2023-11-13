@@ -33,4 +33,4 @@ def cardsCatalog():
                                     status=status_code,
                                     mimetype='application/json')
 
-        return response
+        return cors_response(response)
