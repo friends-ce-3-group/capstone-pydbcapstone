@@ -59,7 +59,7 @@ class DBConnector:
             return entry_data
         #---------------------------------------------------------
 
-        data = {}
+        data = []
         status_code = statuscodes.STATUS_ERR
 
         result = self.read(query)
@@ -71,7 +71,7 @@ class DBConnector:
                 data = populate(columns, result[0])
             else:
                 for idx, found in enumerate(result):
-                    data[idx] = populate(columns, found)
+                    data.append(populate(columns, found))
 
             status_code = statuscodes.STATUS_OK
 
