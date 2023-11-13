@@ -67,10 +67,10 @@ class DBConnect:
         data = {}
         status_code = statuscodes.STATUS_ERR
 
-        result = db.read(query)
+        result = self.read(query)
 
         if result:
-            columns = db.get_table_columns(tablename)
+            columns = self.get_table_columns(tablename)
 
             if len(result) == 1: 
                 data = populate(columns, result[0])
