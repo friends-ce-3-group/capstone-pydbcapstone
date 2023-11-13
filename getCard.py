@@ -1,55 +1,28 @@
 from app import db, app
 from flask import request
 import json
+import statuscodes
+import tablenames
 
 @app.route('/api/getCard', methods=['GET']) # Flask returns status code 405: The method is not allowed if method is not GET
 def getCard():
-    CONST_TABLENAME = "Cards"
+    CONST_TABLENAME = tablenames.CARDS_TABLE
 
     cardId = str(request.args.get('cardId'))
 
     query = "SELECT * FROM {0} WHERE id = {1}".format(CONST_TABLENAME, cardId)
 
     data = {}
-    status_code = 500
-
-    # print(query)
+    status_code = statuscodes.STATUS_ERR
 
     try:
-        result = db.read(query)
-        # print(result)
+        data, status_code = db.processed_read_data(CONST_TABLENAME, query)
 
-        if result:
-            if len(result) == 1: 
-                # single entry found, which is what we expect
-
-                status_code = 200 
-
-                columns = db.get_table_columns(CONST_TABLENAME)
-    
-                # print(columns)
-
-                for col, entry in zip(columns, result[0]):
-                    key_name = col[0]
-                    data[key_name] = entry
-            
-            else: 
-                columns = db.get_table_columns(CONST_TABLENAME)
-
-                for idx, found in enumerate(result):
-                    entry_data = {}
-                    for col, entry in zip(columns, found):
-                        key_name = col[0]
-                        entry_data[key_name] = entry
-
-                    data[idx] = entry_data
-
-        else:
-            # query returns nothing
+        if status_code == statuscodes.STATUS_ERR:
             raise ValueError('No entry found for cardId {}.'.format(cardId))
         
     except Exception as err:
-        data = { "Error": str(err) } # something is wrong with the query, either it returns nothing or it returns more than one entry
+        data = { "Error": str(err) } # something went wrong with the query
 
 
 

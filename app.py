@@ -39,7 +39,7 @@ class DBConnect:
 
         return result
 
-    def get_table_columns(self,tablename : str) -> list:
+    def get_table_columns(self, tablename : str) -> list:
         cursor = self.connection.cursor()
 
         try:
@@ -52,6 +52,36 @@ class DBConnect:
         
         return columns
 
+    def processed_read_data(self, tablename : str, query : str) -> dict:
+        data = {}
+        status_code = 500
+
+        result = db.read(query)
+
+        if result:
+            if len(result) == 1: 
+
+                columns = db.get_table_columns(tablename)
+    
+                for col, entry in zip(columns, result[0]):
+                    key_name = col[0]
+                    data[key_name] = entry
+
+            else:
+                columns = db.get_table_columns(tablename)
+
+                for idx, found in enumerate(result):
+                    entry_data = {}
+                    for col, entry in zip(columns, found):
+                        key_name = col[0]
+                        entry_data[key_name] = entry
+
+                    data[idx] = entry_data
+
+            status_code = 200
+
+
+        return data, status_code
 
     def __del__(self):
         self.connection.close()

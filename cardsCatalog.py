@@ -1,18 +1,21 @@
 from app import db, app
 import json
+import statuscodes
+import tablenames
 
 @app.route('/api/cardsCatalog', methods=['GET'])
 def cardsCatalog():
+    CONST_TABLENAME = tablenames.CARDS_CATALOG_TABLE
 
-    query = """SELECT * FROM cardsCatalog"""
+    query = "SELECT * FROM {}".format(CONST_TABLENAME)
 
     data = {}
-    status_code = 500
-
+    status_code = statuscodes.STATUS_ERR
+    
     try:
         data = db.read(query)
 
-        status_code = 200
+        status_code = statuscodes.STATUS_OK
 
     except Exception as err:
         data = { "Error": str(err) }

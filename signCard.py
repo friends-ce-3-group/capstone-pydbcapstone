@@ -1,13 +1,18 @@
 from app import db, app
 from flask import request
 import json
+import statuscodes
+import tablenames
 
 @app.route('/api/signCard', methods=['POST'])
 def signCard():
-    CONST_TABLENAME = "Messages"
+    CONST_TABLENAME = tablenames.MESSAGES_TABLE
 
     input = request.get_json()
-    
+
+    data = {}
+    status_code = statuscodes.STATUS_ERR
+
     try:
         id = input['id']
         cardId = input['cardId']
@@ -20,15 +25,12 @@ def signCard():
         (id, cardId, name, message, wordCount, createdDateTime) 
         VALUES ('{}', '{}', '{}', '{}', '{}', '{}')""".format(CONST_TABLENAME, 
             id, cardId, name, message, wordCount, createdDateTime)
-
-        data = {}
-        status_code = 500
     
         result = db.write(query)
 
         if len(result) == 0:
 
-            status_code = 200 
+            status_code = statuscodes.STATUS_OK 
         
         else: 
             raise ValueError('Unable to sign card.')

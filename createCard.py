@@ -1,16 +1,18 @@
 from app import db, app
 from flask import request
 import json
+import statuscodes
+import tablenames
 
 @app.route('/api/createCard', methods=['POST'])
 def createCard():
-    CONST_TABLENAME = "Cards"
+    CONST_TABLENAME = tablenames.CARDS_TABLE
 
     input = request.get_json()
 
 
     data = {}
-    status_code = 500
+    status_code = statuscodes.STATUS_ERR
 
     try:
         id = input['id']
@@ -38,7 +40,7 @@ def createCard():
 
         if len(result) == 0:
 
-            status_code = 200 
+            status_code = statuscodes.STATUS_OK 
         
         else: 
             raise ValueError('Unable to create card.')

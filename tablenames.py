@@ -1,0 +1,3 @@
+CARDS_TABLE = "Cards"
+MESSAGES_TABLE = "Messages"
+CARDS_CATALOG_TABLE = "CardsCatalog"
