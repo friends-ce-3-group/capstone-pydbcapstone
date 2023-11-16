@@ -17,21 +17,65 @@ env:
   ECR_URL: ${{ vars.ECR_URL_PYDBCAPSTONE }}
 
 jobs:
+  Get_DB_Data:
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: ./dependencies/database
+
+    steps:
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v2
+
+    - name: init
+      run: terraform init
+
+    - name: validate
+      run: terraform validate
+
+    - name: plan
+      run: terraform plan
+
+  Get_Lambda_Data:
+    runs-on: ubuntu-latest
+    
+    defaults:
+      run:
+        working-directory: ./dependencies/lambda
+
+    steps:
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v2
+
+    - name: init
+      run: terraform init
+
+    - name: validate
+      run: terraform validate
+
+    - name: plan
+      run: terraform plan
 
   Build_and_push_image:
+    needs: [Get_Lambda_Data, Get_DB_Data]
+
     runs-on: ubuntu-latest
 
     steps:
         - uses: actions/checkout@v4
 
+        - name: Write .env
+          run: cat *.out > .env
+
         - uses: cschleiden/replace-tokens@v1
           with:
             files: '["**/.env"]'
           env:
-            ENDPOINT: ${{ vars.RDS_ENDPOINT_ADDRESS }}
+            # ENDPOINT: ${{ vars.RDS_ENDPOINT_ADDRESS }}
             DBUSER: ${{ secrets.DB_USERNAME }}
             DBPASS: ${{ secrets.DB_PASSWORD }}
-            DBNAME: ${{ vars.RDS_DBNAME }}
+            # DBNAME: ${{ vars.RDS_DBNAME }}
 
         - name: Set variables (1)
           run: |

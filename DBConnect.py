@@ -7,7 +7,7 @@ class DBConnector:
             host=app.config["ENDPOINT"],
             user=app.config["DBUSER"],
             password=app.config["DBPASS"],
-            database=app.config["DBNAME"]
+            database=app.config["DBNAME"],
         )
 
     def read(self, query : str) -> list:

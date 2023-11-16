@@ -9,3 +9,4 @@ admin_add.ipynb
 **/*.tfstate.backup
 
 *.out
+*.env
