@@ -100,7 +100,7 @@ jobs:
           path: ${{ github.workspace }}/lambdaenv
           
       - name: Write .env
-        run: aws 1 ${{ github.workspace }}/dbenv/.env.db.out ${{ github.workspace }}/lambdaenv/.env.lambda.out > .env
+        run: awk 1 ${{ github.workspace }}/dbenv/.env.db.out ${{ github.workspace }}/lambdaenv/.env.lambda.out > .env
 
       - uses: cschleiden/replace-tokens@v1
         with:
