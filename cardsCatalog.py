@@ -21,7 +21,7 @@ def cardsCatalog():
         status_code = statuscodes.STATUS_ERR
         
         try:
-            data = db.read(query)
+            data, status_code = db.processed_read_data(CONST_TABLENAME, query)
 
             status_code = statuscodes.STATUS_OK
 
