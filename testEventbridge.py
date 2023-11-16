@@ -5,7 +5,7 @@ import json
 import statuscodes
 import tablenames
 from scheduledEvents import create_cloudwatch_event_rule, utc_cron_generator
-import datetime, timedelta
+from datetime import datetime, timedelta
 
 @app.route('/api/testEventBridge', methods=['GET'])
 def testEventBridge():
@@ -19,7 +19,7 @@ def testEventBridge():
         access_key_id = app.config["ACCESS_KEY_ID"]
         access_key = app.config["ACCESS_KEY"]
 
-        now = datetime.datetime.now() + timedelta(seconds=30)
+        now = datetime.now() + timedelta(seconds=30)
 
         # min = now.minute + 1
         # hr = now.hour
