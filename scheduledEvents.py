@@ -1,4 +1,6 @@
 import boto3
+from dateutil import tz
+from datetime import datetime
 
 # # Replace these values with your AWS credentials and region
 # aws_access_key_id = 'YOUR_ACCESS_KEY_ID'
@@ -31,15 +33,18 @@ def create_cloudwatch_event_rule(rule_name, cron_expression, role_arn, lambda_fu
 
     return response
 
-def utc_cron_generator(sg_min, sg_hr, sg_day_of_month, sg_month, sg_day_of_week, sg_year):
-    # hr = int(sg_hr) - 8
-    # day = int(sg_day_of_month)
-    # if hr < 0:
-    #     hr = hr + 24
-    #     day = day - 1
+def utc_cron_generator(sg_date_time):
+    from_zone = tz.gettz('Singapore')
+    to_zone = tz.gettz('UTC')
+    sg_date_time.replace(tzinfo=from_zone)
+    utc = sg_date_time.astimezone(to_zone)
 
-    hr = sg_hr
-    day = sg_day_of_month
+    min = utc.minute
+    hr = utc.hour
+    day_of_month = utc.day
+    month = utc.month
+    day_of_week = "?"
+    year = utc.year
 
-    cron_expression = "cron({} {} {} {} {} {})".format(sg_min, hr, day, sg_month, sg_day_of_week, sg_year)
+    cron_expression = "cron({} {} {} {} {} {})".format(min, hr, day_of_month, month, day_of_week, year)
     return cron_expression

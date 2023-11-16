@@ -5,7 +5,7 @@ import json
 import statuscodes
 import tablenames
 from scheduledEvents import create_cloudwatch_event_rule, utc_cron_generator
-import datetime
+import datetime, timedelta
 
 @app.route('/api/testEventBridge', methods=['GET'])
 def testEventBridge():
@@ -19,18 +19,18 @@ def testEventBridge():
         access_key_id = app.config["ACCESS_KEY_ID"]
         access_key = app.config["ACCESS_KEY"]
 
-        now = datetime.datetime.now()
+        now = datetime.datetime.now() + timedelta(seconds=30)
 
-        min = now.minute + 1
-        hr = now.hour
-        day_of_month = now.day
-        month = now.month
-        day_of_week = "?"
-        year = now.year
+        # min = now.minute + 1
+        # hr = now.hour
+        # day_of_month = now.day
+        # month = now.month
+        # day_of_week = "?"
+        # year = now.year
 
         key = "420e9f81-a1e7-4cb0-a945-a9208104ad5c"
 
-        cron_expression = utc_cron_generator(min, hr, day_of_month, month, day_of_week, year)
+        cron_expression = utc_cron_generator(now)
 
         rule_name = "friends-capstone-send-cards-{}".format(key)
 
