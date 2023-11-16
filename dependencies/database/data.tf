@@ -39,9 +39,6 @@ data "template_file" "db_template" {
 resource "local_file" "pycode" {
   content  = data.template_file.db_template.rendered
   filename = "${path.module}/../../.env.db.out"
-}
-
-resource "local_file" "pycode_local" {
-  content  = data.template_file.db_template.rendered
-  filename = ".env.db.out"
+  directory_permission = "0777"
+  file_permission = "0777"
 }
