@@ -101,6 +101,8 @@ jobs:
           
       - run: |
           ls ${{ github.workspace }} -la
+          ls ${{ github.workspace }}/dbenv -la
+          ls ${{ github.workspace }}/lambdaenv -la
 
       # - run: ls ${{ github.workspace }}/lambdaenv.test
 
