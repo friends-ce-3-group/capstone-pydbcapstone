@@ -22,7 +22,7 @@ jobs:
 
     defaults:
       run:
-        working-directory: ./dependencies/database
+        working-directory: ./dependencies
 
     steps:
     - name: Setup Terraform
