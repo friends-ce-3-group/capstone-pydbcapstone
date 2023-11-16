@@ -42,8 +42,6 @@ def testEventBridge():
         data = {"Error" : str(err)}
         status_code = statuscodes.STATUS_ERR
 
-    print(data)
-
     response = app.response_class(response=json.dumps(data),
                                 status=status_code,
                                 mimetype='application/json')
