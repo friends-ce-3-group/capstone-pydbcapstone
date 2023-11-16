@@ -100,7 +100,7 @@ jobs:
           path: ${{ github.workspace }}/lambdaenv
           
       - run: |
-          ls ${{ github.workspace }}
+          ls ${{ github.workspace }} -la
 
       # - run: ls ${{ github.workspace }}/lambdaenv.test
 
