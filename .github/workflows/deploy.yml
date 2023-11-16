@@ -106,10 +106,10 @@ jobs:
         with:
           files: '["**/.env"]'
         env:
-          # ENDPOINT: ${{ vars.RDS_ENDPOINT_ADDRESS }}
           DBUSER: ${{ secrets.DB_USERNAME }}
           DBPASS: ${{ secrets.DB_PASSWORD }}
-          # DBNAME: ${{ vars.RDS_DBNAME }}
+          ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
       - name: Set variables (1)
         run: |

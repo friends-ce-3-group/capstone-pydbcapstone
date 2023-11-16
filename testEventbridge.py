@@ -16,6 +16,8 @@ def testEventBridge():
 
         lambda_function_arn = app.config["LAMBDAARN"]
         role_arn = app.config["EVENTBRIDGEIAMROLEARN"]
+        access_key_id = app.config["ACCESS_KEY_ID"]
+        access_key = app.config["ACCESS_KEY"]
 
         now = datetime.datetime.now()
 
@@ -32,12 +34,12 @@ def testEventBridge():
 
         rule_name = "friends-capstone-send-cards-{}".format(key)
 
-        data = create_cloudwatch_event_rule(rule_name, cron_expression, role_arn, lambda_function_arn)
+        data = create_cloudwatch_event_rule(rule_name, cron_expression, role_arn, lambda_function_arn, access_key_id, access_key)
         
         status_code = statuscodes.STATUS_OK
 
     except Exception as err:
-        data = {"Error" : err}
+        data = {"Error" : str(err)}
         status_code = statuscodes.STATUS_ERR
 
     print(data)

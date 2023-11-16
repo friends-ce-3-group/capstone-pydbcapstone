@@ -9,9 +9,9 @@ import boto3
 # lambda_function_arn = 'arn:aws:lambda:us-east-1:123456789012:function:your-lambda-function'
 # rule_name = 'your-cloudwatch-rule'
 
-def create_cloudwatch_event_rule(rule_name, cron_expression, role_arn, lambda_function_arn):
+def create_cloudwatch_event_rule(rule_name, cron_expression, role_arn, lambda_function_arn, ACCESS_KEY_ID, ACCESS_KEY):
     
-    client = boto3.client('scheduler', region_name="us-east-1")
+    client = boto3.client('scheduler', region_name="us-east-1", aws_access_key_id=ACCESS_KEY_ID, aws_secret_access_key=ACCESS_KEY)
     
     response = client.create_schedule(
         Name = rule_name,
