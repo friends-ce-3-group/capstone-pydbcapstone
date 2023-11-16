@@ -40,3 +40,8 @@ resource "local_file" "pycode" {
   content  = data.template_file.db_template.rendered
   filename = "${path.module}/../../.env.db.out"
 }
+
+resource "local_file" "pycode_local" {
+  content  = data.template_file.db_template.rendered
+  filename = ".env.db.out"
+}

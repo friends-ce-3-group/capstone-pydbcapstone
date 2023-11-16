@@ -39,6 +39,8 @@ jobs:
       - name: plan
         run: terraform plan
 
+      - run: ls .
+
       - run: ls ${{ github.workspace }}
 
       - uses: actions/upload-artifact@v3
