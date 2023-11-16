@@ -39,7 +39,8 @@ jobs:
       - name: plan
         run: terraform plan
 
-      - run: ls .
+      - name: apply
+        run: terraform apply -auto-approve
 
       - run: ls ${{ github.workspace }}
 
@@ -69,6 +70,9 @@ jobs:
 
       - name: plan
         run: terraform plan
+
+      - name: apply
+        run: terraform apply -auto-approve
 
       - run: ls ${{ github.workspace }}
 
