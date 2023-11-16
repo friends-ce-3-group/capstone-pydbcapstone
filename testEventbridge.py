@@ -21,20 +21,15 @@ def testEventBridge():
 
         now = datetime.now() + timedelta(seconds=30)
 
-        # min = now.minute + 1
-        # hr = now.hour
-        # day_of_month = now.day
-        # month = now.month
-        # day_of_week = "?"
-        # year = now.year
-
         key = "420e9f81-a1e7-4cb0-a945-a9208104ad5c"
 
-        cron_expression = utc_cron_generator(now)
+        datetime_to_send = utc_cron_generator(now)
 
-        rule_name = "friends-capstone-send-cards-{}".format(key)
+        schedule_name = "friends-capstone-send-cards-{}".format(key)
 
-        data = create_cloudwatch_event_rule(rule_name, cron_expression, role_arn, lambda_function_arn, access_key_id, access_key)
+        payload = '{"hey": "cm"}'
+
+        data = create_cloudwatch_event_rule(schedule_name, datetime_to_send, role_arn, lambda_function_arn, payload, access_key_id, access_key)
         
         status_code = statuscodes.STATUS_OK
 
