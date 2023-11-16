@@ -1,3 +1,11 @@
 **/*.pyc
 local.env
 admin_add.ipynb
+
+**/.terraform/
+**/.terraform.lock.hcl
+**/.terraform.tfstate.lock.info
+**/terraform.tfstate
+**/*.tfstate.backup
+
+*.out
