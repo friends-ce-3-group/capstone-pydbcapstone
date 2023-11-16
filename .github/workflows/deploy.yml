@@ -103,8 +103,8 @@ jobs:
           ls ${{ github.workspace }} -la
           ls ${{ github.workspace }}/dbenv -la
           ls ${{ github.workspace }}/lambdaenv -la
-          mv ${{ github.workspace }}/dbenv/*.out ${{ github.workspace }}/
-          mv ${{ github.workspace }}/lambdaenv/*.out ${{ github.workspace }}/
+          mv ${{ github.workspace }}/dbenv/.env.db.out ${{ github.workspace }}/
+          mv ${{ github.workspace }}/lambdaenv/.env.lambda.out ${{ github.workspace }}/
           ls ${{ github.workspace }} -la
 
       # - run: ls ${{ github.workspace }}/lambdaenv.test
