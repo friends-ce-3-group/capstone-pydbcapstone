@@ -99,8 +99,8 @@ jobs:
           name: lambdaenv
           path: ${{ github.workspace }}/lambdaenv.test
           
-      - run: cat ${{ github.workspace }}/dbenv.test
-      - run: cat ${{ github.workspace }}/lambdaenv.test
+      - run: ls ${{ github.workspace }}/dbenv.test
+      - run: ls ${{ github.workspace }}/lambdaenv.test
 
       - name: Write .env
         run: cat ${{ github.workspace }}/*.out > .env
