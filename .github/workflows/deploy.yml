@@ -92,16 +92,15 @@ jobs:
       - uses: actions/download-artifact@v3
         with:
           name: dbenv
-          path: ${{ github.workspace }}/dbenv.test
+          path: ${{ github.workspace }}/dbenv
 
       - uses: actions/download-artifact@v3
         with:
           name: lambdaenv
-          path: ${{ github.workspace }}/lambdaenv.test
+          path: ${{ github.workspace }}/lambdaenv
           
       - run: |
-          cd ${{ github.workspace }}/dbenv.test
-          ls .
+          ls ${{ github.workspace }}
 
       # - run: ls ${{ github.workspace }}/lambdaenv.test
 
