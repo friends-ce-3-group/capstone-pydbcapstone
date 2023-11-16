@@ -20,9 +20,9 @@ jobs:
   Get_DB_Data:
     runs-on: ubuntu-latest
 
-    defaults:
-      run:
-        working-directory: ./dependencies
+    # defaults:
+    #   run:
+    #     working-directory: ./dependencies
 
     steps:
     - name: Setup Terraform
