@@ -5,6 +5,7 @@ import json
 import statuscodes
 import tablenames
 from scheduledEvents import create_cloudwatch_event_rule, utc_cron_generator
+import datetime
 
 @app.route('/api/testEventBridge', methods=['GET'])
 def testEventBridge():
@@ -16,26 +17,30 @@ def testEventBridge():
         lambda_function_arn = app.config["LAMBDAARN"]
         role_arn = app.config["EVENTBRIDGEIAMROLEARN"]
 
-        min = "29"
-        hr = "23"
-        day_of_month = "16"
-        month = "11"
+        now = datetime.datetime.now()
+
+        min = now.minute + 1
+        hr = now.hour
+        day_of_month = now.day
+        month = now.month
         day_of_week = "?"
-        year = "2023"
+        year = now.year
 
         key = "420e9f81-a1e7-4cb0-a945-a9208104ad5c"
 
         cron_expression = utc_cron_generator(min, hr, day_of_month, month, day_of_week, year)
 
-        rule_name = "friends-capstone-send-cards-{}-{}-{}-{}-{}".format(min, hr, day_of_month, month, year)
+        rule_name = "friends-capstone-send-cards-{}".format(key)
 
         data = create_cloudwatch_event_rule(rule_name, cron_expression, role_arn, lambda_function_arn)
-        print(data)
+        
         status_code = statuscodes.STATUS_OK
 
     except Exception as err:
         data = {"Error" : err}
         status_code = statuscodes.STATUS_ERR
+
+    print(data)
 
     response = app.response_class(response=json.dumps(data),
                                 status=status_code,
