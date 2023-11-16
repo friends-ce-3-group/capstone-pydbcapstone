@@ -110,7 +110,7 @@ jobs:
       # - run: ls ${{ github.workspace }}/lambdaenv.test
 
       - name: Write .env
-        run: cat ${{ github.workspace }}/*.out > .env
+        run: cat ${{ github.workspace }}/dbenv/.env.db.out ${{ github.workspace }}/lambdaenv/.env.lambda.out > .env
 
       - uses: cschleiden/replace-tokens@v1
         with:
