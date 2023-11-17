@@ -57,18 +57,23 @@ def sendCardImpl(cardId, app):
 
     if status_code == statuscodes.STATUS_OK:
 
+        print("\n\n\n",cardData,"\n\n\n")
+
         payload = {}
         payload["recipientName"] = cardData["recipientName"]
         payload["recipientEmail"] = cardData["recipientEmail"]
         payload["imagePath"] = cardData["imagePath"]
-
+        
         sendDate = cardData["sendDate"]
         sendTime = cardData["sendTime"]
         sendDateTime = "{} {}".format(sendDate, sendTime)
         sendDateTime = datetime.strptime(sendDateTime, "%Y-%m-%d %H:%M:%S")
-        
-        schedule_name = "{}-{}-{}".format(payload["recipientName"], payload["recipientEmail"], sendDateTime.strftime("%m/%d/%Y-%H:%M:%S").replace("/","-").replace(":","-"))
+        datetime_to_send = utc_cron_generator(sendDateTime)
 
-        data = create_cloudwatch_event_rule(schedule_name, sendDateTime, role_arn, lambda_function_arn, payload, access_key_id, access_key)
+        schedule_name = "{0}-{1}-{2}".format(payload["recipientName"], payload["recipientEmail"].replace("@","."), sendDateTime.strftime("%m/%d/%Y-%H:%M:%S").replace("/","-").replace(":","-"))
+
+        payload_json = json.dumps(payload)
+
+        data = create_cloudwatch_event_rule(schedule_name, datetime_to_send, role_arn, lambda_function_arn, payload_json, access_key_id, access_key)
 
     return data, status_code
