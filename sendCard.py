@@ -8,7 +8,7 @@ from scheduledEvents import create_cloudwatch_event_rule, utc_cron_generator
 from datetime import datetime, timedelta
 from getCard import getCardData
 
-@app.route('/api/testEventBridge', methods=['GET'])
+@app.route('/api/sendCard', methods=['GET'])
 def sendCard():
 
     cardId = str(request.args.get('cardId'))
