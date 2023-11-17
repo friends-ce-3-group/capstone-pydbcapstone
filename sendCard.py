@@ -65,8 +65,8 @@ def sendCardImpl(cardId, app):
         sendDate = cardData["sendDate"]
         sendTime = cardData["sendTime"]
         sendDateTime = "{} {}".format(sendDate, sendTime)
-        sendDateTime = datetime.datetime.strptime(sendDateTime, "%Y-%m-%d %H:%M:%S")
-
+        sendDateTime = datetime.strptime(sendDateTime, "%Y-%m-%d %H:%M:%S")
+        
         schedule_name = "{}-{}-{}".format(payload["recipientName"], payload["recipientEmail"], sendDateTime.strftime("%m/%d/%Y-%H:%M:%S").replace("/","-").replace(":","-"))
 
         data = create_cloudwatch_event_rule(schedule_name, sendDateTime, role_arn, lambda_function_arn, payload, access_key_id, access_key)
