@@ -15,32 +15,32 @@ def sendCard():
 
     status_code = 500
 
-    # data = sendCardImpl(cardId, app)
+    data = sendCardImpl(cardId, app)
 
-    try:
+    # try:
 
-        lambda_function_arn = app.config["LAMBDAARN"]
-        role_arn = app.config["EVENTBRIDGEIAMROLEARN"]
-        access_key_id = app.config["ACCESS_KEY_ID"]
-        access_key = app.config["ACCESS_KEY"]
+    #     lambda_function_arn = app.config["LAMBDAARN"]
+    #     role_arn = app.config["EVENTBRIDGEIAMROLEARN"]
+    #     access_key_id = app.config["ACCESS_KEY_ID"]
+    #     access_key = app.config["ACCESS_KEY"]
 
-        now = datetime.now() + timedelta(seconds=30)
+    #     now = datetime.now() + timedelta(seconds=30)
 
-        key = "420e9f81-a1e7-4cb0-a945-a9208104ad5c"
+    #     key = "420e9f81-a1e7-4cb0-a945-a9208104ad5c"
 
-        datetime_to_send = utc_cron_generator(now)
+    #     datetime_to_send = utc_cron_generator(now)
 
-        schedule_name = "friends-capstone-send-cards-{}".format(key)
+    #     schedule_name = "friends-capstone-send-cards-{}".format(key)
 
-        payload = '{"hey": "cm"}'
+    #     payload = '{"hey": "cm"}'
 
-        data = create_cloudwatch_event_rule(schedule_name, datetime_to_send, role_arn, lambda_function_arn, payload, access_key_id, access_key)
+    #     data = create_cloudwatch_event_rule(schedule_name, datetime_to_send, role_arn, lambda_function_arn, payload, access_key_id, access_key)
         
-        status_code = statuscodes.STATUS_OK
+    #     status_code = statuscodes.STATUS_OK
 
-    except Exception as err:
-        data = {"Error" : str(err)}
-        status_code = statuscodes.STATUS_ERR
+    # except Exception as err:
+    #     data = {"Error" : str(err)}
+    #     status_code = statuscodes.STATUS_ERR
 
     response = app.response_class(response=json.dumps(data),
                                 status=status_code,
@@ -54,20 +54,23 @@ def sendCardImpl(cardId, app):
     access_key_id = app.config["ACCESS_KEY_ID"]
     access_key = app.config["ACCESS_KEY"]
 
-    cardData = getCardData(cardId)
+    data = {}
+    cardData, status_code = getCardData(cardId)
 
-    payload = {}
-    payload["recipientName"] = cardData["recipientName"]
-    payload["recipientEmail"] = cardData["recipientEmail"]
-    payload["imagePath"] = cardData["imagePath"]
+    if status_code == statuscodes.STATUS_OK:
 
-    sendDate = cardData["sendDate"]
-    sendTime = cardData["sendTime"]
-    sendDateTime = "{} {}".format(sendDate, sendTime)
-    sendDateTime = datetime.datetime.strptime(sendDateTime, "%Y-%m-%d %H:%M:%S")
+        payload = {}
+        payload["recipientName"] = cardData["recipientName"]
+        payload["recipientEmail"] = cardData["recipientEmail"]
+        payload["imagePath"] = cardData["imagePath"]
 
-    schedule_name = "{}-{}-{}".format(payload["recipientName"], payload["recipientEmail"], sendDateTime.strftime("%m/%d/%Y-%H:%M:%S").replace("/","-").replace(":","-"))
+        sendDate = cardData["sendDate"]
+        sendTime = cardData["sendTime"]
+        sendDateTime = "{} {}".format(sendDate, sendTime)
+        sendDateTime = datetime.datetime.strptime(sendDateTime, "%Y-%m-%d %H:%M:%S")
 
-    data = create_cloudwatch_event_rule(schedule_name, sendDateTime, role_arn, lambda_function_arn, payload, access_key_id, access_key)
+        schedule_name = "{}-{}-{}".format(payload["recipientName"], payload["recipientEmail"], sendDateTime.strftime("%m/%d/%Y-%H:%M:%S").replace("/","-").replace(":","-"))
 
-    return data
+        data = create_cloudwatch_event_rule(schedule_name, sendDateTime, role_arn, lambda_function_arn, payload, access_key_id, access_key)
+
+    return data, status_code
