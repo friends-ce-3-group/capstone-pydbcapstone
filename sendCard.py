@@ -13,9 +13,7 @@ def sendCard():
 
     cardId = str(request.args.get('cardId'))
 
-    status_code = 500
-
-    data = sendCardImpl(cardId, app)
+    data, status_code = sendCardImpl(cardId, app)
 
     # try:
 
