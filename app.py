@@ -22,7 +22,7 @@ import createCard
 
 import signCard
 
-import testEventbridge
+import sendCard
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')
