@@ -12,28 +12,50 @@ def getCard():
         return cors_preflight_response()
 
     else:
-        CONST_TABLENAME = tablenames.CARDS_TABLE
-
         cardId = str(request.args.get('cardId'))
 
-        query = "SELECT * FROM {0} WHERE id = '{1}'".format(CONST_TABLENAME, cardId)
+        data, status_code = getCardData(cardId)
 
-        data = {}
-        status_code = statuscodes.STATUS_ERR
+        # CONST_TABLENAME = tablenames.CARDS_TABLE
 
-        try:
-            data, status_code = db.processed_read_data(CONST_TABLENAME, query)
+        # cardId = str(request.args.get('cardId'))
 
-            if status_code == statuscodes.STATUS_ERR:
-                raise ValueError('No entry found for cardId {}.'.format(cardId))
+        # query = "SELECT * FROM {0} WHERE id = '{1}'".format(CONST_TABLENAME, cardId)
+
+        # data = {}
+        # status_code = statuscodes.STATUS_ERR
+
+        # try:
+        #     data, status_code = db.processed_read_data(CONST_TABLENAME, query)
+
+        #     if status_code == statuscodes.STATUS_ERR:
+        #         raise ValueError('No entry found for cardId {}.'.format(cardId))
             
-        except Exception as err:
-            data = { "Error": str(err) } # something went wrong with the query
-
-
+        # except Exception as err:
+        #     data = { "Error": str(err) } # something went wrong with the query
 
         response = app.response_class(response=json.dumps(data),
                                     status=status_code,
                                     mimetype='application/json')
         
         return cors_response(response)
+    
+
+def getCardData(cardId):
+    CONST_TABLENAME = tablenames.CARDS_TABLE
+
+    query = "SELECT * FROM {0} WHERE id = '{1}'".format(CONST_TABLENAME, cardId)
+
+    data = {}
+    status_code = statuscodes.STATUS_ERR
+
+    try:
+        data, status_code = db.processed_read_data(CONST_TABLENAME, query)
+
+        if status_code == statuscodes.STATUS_ERR:
+            raise ValueError('No entry found for cardId {}.'.format(cardId))
+        
+    except Exception as err:
+        data = { "Error": str(err) } # something went wrong with the query
+
+    return data, status_code
