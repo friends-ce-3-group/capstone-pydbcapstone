@@ -22,7 +22,7 @@ import createCard   # curl -d '{"id" : "", "imageKey" : "", "imageCategory" : ""
 
 import signCard     # curl -d '{"id" : "", "cardId" : "", "name" : "", "message" : "", "wordCount" : "", "createdDateTime" : ""}' -X POST /api/signCard
 
-import sendCard     # /api/sendCard?cardId=XXXX
+# import sendCard     # /api/sendCard?cardId=XXXX
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')

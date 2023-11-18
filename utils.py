@@ -2,6 +2,7 @@ import boto3
 from dateutil import tz
 from datetime import datetime
 import statuscodes
+import json
 
 def create_cloudwatch_event_rule(rule_name, cron_expression, role_arn, lambda_function_arn, payload_json, ACCESS_KEY_ID, ACCESS_KEY):
     
@@ -54,3 +55,30 @@ def get_full_datetimestr(sendDate, sendTime):
     sendDateTime = "{} {}".format(sendDate, sendTime)
     sendDateTime = datetime.strptime(sendDateTime, "%Y-%m-%d %H:%M:%S")
     return sendDateTime
+
+
+
+def sendCardImpl(recipientName, recipientEmail, imagePath, sendDate, sendTime, sendTimezone, config):
+    lambda_function_arn = config["LAMBDAARN"]
+    role_arn = config["EVENTBRIDGEIAMROLEARN"]
+    access_key_id = config["ACCESS_KEY_ID"]
+    access_key = config["ACCESS_KEY"]
+
+    data = {}
+    status_code = statuscodes.STATUS_ERR
+
+    payload = {}
+    payload["recipientName"] = recipientName
+    payload["recipientEmail"] = recipientEmail
+    payload["imagePath"] = imagePath
+    
+    datetimestr = get_full_datetimestr(sendDate, sendTime)
+    datetimecron = utc_cron_generator(datetimestr, sendTimezone)
+
+    schedule_name = "{0}-{1}-{2}".format(payload["recipientName"], payload["recipientEmail"].replace("@","."), datetimestr.strftime("%m/%d/%Y-%H:%M:%S").replace("/","-").replace(":","-"))
+
+    payload_json = json.dumps(payload)
+
+    data, status_code = create_cloudwatch_event_rule(schedule_name, datetimecron, role_arn, lambda_function_arn, payload_json, access_key_id, access_key)
+
+    return data, status_code

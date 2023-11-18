@@ -1,4 +1,5 @@
 from endpoint_includes import *
+from utils import sendCardImpl
 
 @app.route('/api/createCard', methods=['POST','OPTIONS'])
 def createCard():
@@ -43,13 +44,14 @@ def createCard():
 
             if len(result) == 0:
 
-                status_code = statuscodes.STATUS_OK 
-            
+                # schedule the card to be sent to the receipient
+                data, status_code = sendCardImpl(recipientName, recipientEmail, imagePath, sendDate, sendTime, sendTimezone, app.config)
+
             else: 
                 raise ValueError('Unable to create card.')
                 
         except Exception as err:
-            data = { "Error": str(err) } # something is wrong with the query, either it returns nothing or it returns more than one entry
+            data = { "Error": str(err) } # something is wrong with the query
 
 
         response = app.response_class(response=json.dumps(data),
