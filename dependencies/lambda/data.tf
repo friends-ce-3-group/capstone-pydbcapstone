@@ -22,13 +22,13 @@ provider "aws" {
 #   }
 # }
 
-output "lambda_arn" {
-    value = data.aws_lambda_function.lambda.arn
-}
+# output "lambda_arn" {
+#     value = data.aws_lambda_function.lambda.arn
+# }
 
-output "eventbridgerole_arn" {
-    value = data.aws_iam_role.eventbridgerole.arn
-}
+# output "eventbridgerole_arn" {
+#     value = data.aws_iam_role.eventbridgerole.arn
+# }
 
 data "template_file" "lambda_template" {
   template = file("${path.module}/../../.env.lambda")
