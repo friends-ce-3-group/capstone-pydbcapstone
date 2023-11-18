@@ -1,12 +1,8 @@
 # app.py
 from flask import Flask
 
-import statuscodes
-
 app = Flask(__name__)
 app.config.from_pyfile("config.py") # run this before any of the other imports to set up the configuration data
-
-
 
 #------------------------------------------------
 
