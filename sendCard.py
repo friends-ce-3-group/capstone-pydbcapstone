@@ -1,6 +1,6 @@
-from endpointIncludes import *
+from endpoint_includes import *
 from scheduledEvents import create_cloudwatch_event_rule, utc_cron_generator
-from datetime import datetime, timedelta
+from datetime import datetime
 from getCard import getCardData
 
 @app.route('/api/sendCard', methods=['GET'])

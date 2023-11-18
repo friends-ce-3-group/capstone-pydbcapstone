@@ -1,4 +1,4 @@
-from endpointIncludes import *
+from endpoint_includes import *
 
 @app.route('/api/cardsCatalog', methods=['GET','OPTIONS'])
 def cardsCatalog():

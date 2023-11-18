@@ -1,4 +1,4 @@
-from endpointIncludes import *
+from endpoint_includes import *
 
 @app.route('/api/getCard', methods=['GET','OPTIONS']) # Flask returns status code 405: The method is not allowed if method is not GET
 def getCard():
