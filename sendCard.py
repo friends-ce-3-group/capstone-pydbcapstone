@@ -1,4 +1,4 @@
-from app import db, app
+from app import app
 from flask import request
 from cors import cors_preflight_response, cors_response
 import json

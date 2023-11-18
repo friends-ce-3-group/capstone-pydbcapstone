@@ -1,5 +1,6 @@
-from app import db, app
+from app import app
 from flask import request
+from DBConnect import DBConnector
 from cors import cors_preflight_response, cors_response
 import json
 import statuscodes
@@ -12,6 +13,8 @@ def signCard():
         return cors_preflight_response()
 
     else:
+        db = DBConnector(app)
+
         CONST_TABLENAME = tablenames.MESSAGES_TABLE
 
         input = request.get_json()
@@ -48,5 +51,7 @@ def signCard():
         response = app.response_class(response=json.dumps(data),
                                     status=status_code,
                                     mimetype='application/json')
+        
+        db.__del__()
         
         return cors_response(response)

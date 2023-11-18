@@ -1,5 +1,6 @@
-from app import db, app
+from app import app
 from flask import request
+from DBConnect import DBConnector
 from cors import cors_preflight_response, cors_response
 import json
 import statuscodes
@@ -12,6 +13,7 @@ def getMessages():
         return cors_preflight_response()
 
     else:
+        db = DBConnector(app)
         CONST_TABLENAME = tablenames.MESSAGES_TABLE
 
         cardId = str(request.args.get('cardId'))
@@ -36,4 +38,5 @@ def getMessages():
                                     status=status_code,
                                     mimetype='application/json')
         
+        db.__del__()
         return cors_response(response)

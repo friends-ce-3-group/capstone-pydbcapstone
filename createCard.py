@@ -1,5 +1,6 @@
-from app import db, app
+from app import app
 from flask import request
+from DBConnect import DBConnector
 from cors import cors_preflight_response, cors_response
 import json
 import statuscodes
@@ -12,10 +13,12 @@ def createCard():
         return cors_preflight_response()
 
     else:
+        print("1:")
+        db = DBConnector(app)
         CONST_TABLENAME = tablenames.CARDS_TABLE
-
+        print("2:")
         input = request.get_json()
-
+        print(request.get_json())
 
         data = {}
         status_code = statuscodes.STATUS_ERR
@@ -42,6 +45,8 @@ def createCard():
                 id, imageKey, imageCategory, imagePath, imageBackgroundColor, recipientName, \
                     recipientEmail, senderName, senderEmail, sendDate, sendTime, sendTimezone, createdDataTime)
 
+            print(query)
+
             result = db.write(query)
 
             if len(result) == 0:
@@ -58,5 +63,5 @@ def createCard():
         response = app.response_class(response=json.dumps(data),
                                     status=status_code,
                                     mimetype='application/json')
-        
+        db.__del__()
         return cors_response(response)

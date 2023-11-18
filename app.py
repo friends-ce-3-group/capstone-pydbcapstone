@@ -1,12 +1,12 @@
 # app.py
 from flask import Flask
-from DBConnect import DBConnector
+
 import statuscodes
 
 app = Flask(__name__)
 app.config.from_pyfile("config.py") # run this before any of the other imports to set up the configuration data
 
-db = DBConnector(app) # connect to BD through this connector
+
 
 #------------------------------------------------
 
