@@ -10,19 +10,19 @@ app.config.from_pyfile("config.py") # run this before any of the other imports t
 
 #------------------------------------------------
 
-import healthcheck
+import healthcheck  # /api/healthcheck
 
-import cardsCatalog
+import cardsCatalog # /api/cardsCatalog
 
-import getCard
+import getCard      # /api/getCard?cardId=XXXX
 
-import getMessages
+import getMessages  # /api/getMessages?cardId=XXXX
 
-import createCard
+import createCard   # curl -d '{"id" : "", "imageKey" : "", "imageCategory" : "", "imagePath" : "", "imageBackgroundColor" : "", "recipientName" : "", "recipientEmail" : "", "senderName" : "", "senderEmail" : "", "sendDate" : "", "sendTime" : "", "sendTimezone" : "", "createdDataTime" : ""}' -X POST /api/createCard
 
-import signCard
+import signCard     # curl -d '{"id" : "", "cardId" : "", "name" : "", "message" : "", "wordCount" : "", "createdDateTime" : ""}' -X POST /api/signCard
 
-import sendCard
+import sendCard     # /api/sendCard?cardId=XXXX
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')

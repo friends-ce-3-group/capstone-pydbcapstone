@@ -1,6 +1,5 @@
 from endpoint_includes import *
-from scheduledEvents import create_cloudwatch_event_rule, utc_cron_generator
-from datetime import datetime
+from utils import create_cloudwatch_event_rule, utc_cron_generator, get_full_datetimestr
 from getCard import getCardData
 
 @app.route('/api/sendCard', methods=['GET'])
@@ -32,16 +31,13 @@ def sendCardImpl(cardId, app):
         payload["recipientEmail"] = cardData["recipientEmail"]
         payload["imagePath"] = cardData["imagePath"]
         
-        sendDate = cardData["sendDate"]
-        sendTime = cardData["sendTime"]
-        sendDateTime = "{} {}".format(sendDate, sendTime)
-        sendDateTime = datetime.strptime(sendDateTime, "%Y-%m-%d %H:%M:%S")
-        datetime_to_send = utc_cron_generator(sendDateTime)
+        datetimestr = get_full_datetimestr(cardData["sendDate"], cardData["sendTime"])
+        datetimecron = utc_cron_generator(datetimestr, cardData["sendTimezone"])
 
-        schedule_name = "{0}-{1}-{2}".format(payload["recipientName"], payload["recipientEmail"].replace("@","."), sendDateTime.strftime("%m/%d/%Y-%H:%M:%S").replace("/","-").replace(":","-"))
+        schedule_name = "{0}-{1}-{2}".format(payload["recipientName"], payload["recipientEmail"].replace("@","."), datetimestr.strftime("%m/%d/%Y-%H:%M:%S").replace("/","-").replace(":","-"))
 
         payload_json = json.dumps(payload)
 
-        data = create_cloudwatch_event_rule(schedule_name, datetime_to_send, role_arn, lambda_function_arn, payload_json, access_key_id, access_key)
+        data, status_code = create_cloudwatch_event_rule(schedule_name, datetimecron, role_arn, lambda_function_arn, payload_json, access_key_id, access_key)
 
     return data, status_code
