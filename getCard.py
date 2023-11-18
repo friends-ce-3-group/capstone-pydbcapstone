@@ -1,5 +1,6 @@
-from app import db, app
+from app import app
 from flask import request
+from DBConnect import DBConnector
 from cors import cors_preflight_response, cors_response
 import json
 import statuscodes
@@ -12,6 +13,7 @@ def getCard():
         return cors_preflight_response()
 
     else:
+        
         cardId = str(request.args.get('cardId'))
 
         data, status_code = getCardData(cardId)
@@ -20,10 +22,13 @@ def getCard():
                                     status=status_code,
                                     mimetype='application/json')
         
+        
         return cors_response(response)
     
 
 def getCardData(cardId):
+    db = DBConnector(app)
+
     CONST_TABLENAME = tablenames.CARDS_TABLE
 
     query = "SELECT * FROM {0} WHERE id = '{1}'".format(CONST_TABLENAME, cardId)
@@ -40,4 +45,5 @@ def getCardData(cardId):
     except Exception as err:
         data = { "Error": str(err) } # something went wrong with the query
 
+    db.__del__()
     return data, status_code
