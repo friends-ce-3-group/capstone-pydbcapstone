@@ -1,9 +1,4 @@
-from app import app
-from flask import request
-from cors import cors_preflight_response, cors_response
-import json
-import statuscodes
-import tablenames
+from endpointIncludes import *
 from scheduledEvents import create_cloudwatch_event_rule, utc_cron_generator
 from datetime import datetime, timedelta
 from getCard import getCardData
@@ -32,8 +27,6 @@ def sendCardImpl(cardId, app):
 
     if status_code == statuscodes.STATUS_OK:
 
-        print("\n\n\n",cardData,"\n\n\n")
-
         payload = {}
         payload["recipientName"] = cardData["recipientName"]
         payload["recipientEmail"] = cardData["recipientEmail"]
@@ -52,31 +45,3 @@ def sendCardImpl(cardId, app):
         data = create_cloudwatch_event_rule(schedule_name, datetime_to_send, role_arn, lambda_function_arn, payload_json, access_key_id, access_key)
 
     return data, status_code
-
-
-
-
-    # try:
-
-    #     lambda_function_arn = app.config["LAMBDAARN"]
-    #     role_arn = app.config["EVENTBRIDGEIAMROLEARN"]
-    #     access_key_id = app.config["ACCESS_KEY_ID"]
-    #     access_key = app.config["ACCESS_KEY"]
-
-    #     now = datetime.now() + timedelta(seconds=30)
-
-    #     key = "420e9f81-a1e7-4cb0-a945-a9208104ad5c"
-
-    #     datetime_to_send = utc_cron_generator(now)
-
-    #     schedule_name = "friends-capstone-send-cards-{}".format(key)
-
-    #     payload = '{"hey": "cm"}'
-
-    #     data = create_cloudwatch_event_rule(schedule_name, datetime_to_send, role_arn, lambda_function_arn, payload, access_key_id, access_key)
-        
-    #     status_code = statuscodes.STATUS_OK
-
-    # except Exception as err:
-    #     data = {"Error" : str(err)}
-    #     status_code = statuscodes.STATUS_ERR

@@ -1,10 +1,4 @@
-from app import app
-from flask import request
-from DBConnect import DBConnector
-from cors import cors_preflight_response, cors_response
-import json
-import statuscodes
-import tablenames
+from endpointIncludes import *
 
 @app.route('/api/getCard', methods=['GET','OPTIONS']) # Flask returns status code 405: The method is not allowed if method is not GET
 def getCard():
@@ -27,6 +21,7 @@ def getCard():
     
 
 def getCardData(cardId):
+
     db = DBConnector(app)
 
     CONST_TABLENAME = tablenames.CARDS_TABLE
@@ -46,4 +41,5 @@ def getCardData(cardId):
         data = { "Error": str(err) } # something went wrong with the query
 
     db.__del__()
+
     return data, status_code

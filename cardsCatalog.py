@@ -1,10 +1,4 @@
-from app import app
-from DBConnect import DBConnector
-from flask import request
-from cors import cors_preflight_response, cors_response
-import json
-import statuscodes
-import tablenames
+from endpointIncludes import *
 
 @app.route('/api/cardsCatalog', methods=['GET','OPTIONS'])
 def cardsCatalog():
@@ -14,6 +8,7 @@ def cardsCatalog():
 
     else:
         db = DBConnector(app)
+
         CONST_TABLENAME = tablenames.CARDS_CATALOG_TABLE
 
         query = "SELECT * FROM {}".format(CONST_TABLENAME)
@@ -33,5 +28,7 @@ def cardsCatalog():
         response = app.response_class(response=json.dumps(data),
                                     status=status_code,
                                     mimetype='application/json')
+        
         db.__del__()
+
         return cors_response(response)

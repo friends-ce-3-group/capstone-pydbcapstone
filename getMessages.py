@@ -1,10 +1,4 @@
-from app import app
-from flask import request
-from DBConnect import DBConnector
-from cors import cors_preflight_response, cors_response
-import json
-import statuscodes
-import tablenames
+from endpointIncludes import *
 
 @app.route('/api/getMessages', methods=['GET','OPTIONS'])
 def getMessages():
@@ -14,6 +8,7 @@ def getMessages():
 
     else:
         db = DBConnector(app)
+        
         CONST_TABLENAME = tablenames.MESSAGES_TABLE
 
         cardId = str(request.args.get('cardId'))
@@ -39,4 +34,5 @@ def getMessages():
                                     mimetype='application/json')
         
         db.__del__()
+
         return cors_response(response)

@@ -1,6 +1,4 @@
-from app import app
-import json
-import statuscodes
+from endpointIncludes import *
 
 @app.route('/api/healthcheck', methods=['GET'])
 def healthcheck():
