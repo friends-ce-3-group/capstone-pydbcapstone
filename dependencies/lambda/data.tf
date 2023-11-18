@@ -33,8 +33,8 @@ output "eventbridgerole_arn" {
 data "template_file" "lambda_template" {
   template = file("${path.module}/../../.env.lambda")
   vars = {
-    LAMBDAARN = #{LAMBDA_EMAIL_SVC_ARN}#
-    EVENTBRIDGEIAMROLEARN = #{EVENTBRIDGEROLE_EMAIL_SVC_ARN}#
+    LAMBDAARN = "#{LAMBDA_EMAIL_SVC_ARN}#"
+    EVENTBRIDGEIAMROLEARN = "#{EVENTBRIDGEROLE_EMAIL_SVC_ARN}#"
   }
 }
 
