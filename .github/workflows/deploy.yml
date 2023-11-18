@@ -61,7 +61,7 @@ jobs:
 
       - uses: cschleiden/replace-tokens@v1
         with:
-          files: '["data.tf"]'
+          files: '["${{ github.workspace }}/dependencies/lambda/data.tf"]'
         env:
           LAMBDA_EMAIL_SVC_ARN: ${{ vars.LAMBDA_ARN_EMAIL_SERVICE }}
           EVENTBRIDGEROLE_EMAIL_SVC_ARN: ${{ vars.EVENTBRIDGELAMDBA_ARN_EMAIL_SERVICE }}
