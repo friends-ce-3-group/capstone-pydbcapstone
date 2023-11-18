@@ -1,0 +1,1 @@
+- boto3.client('scheduler') now requires AWS credentials to create schedules in Event Bridge. This should be handled by IAM permissions. After the ECS task role is given the permission to add EventBridge schedules, remove the dependency of boto3.client('scheduler') on the AWS credentials and remove the latter from environment variables.
