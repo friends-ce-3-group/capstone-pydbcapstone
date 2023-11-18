@@ -59,6 +59,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - uses: cschleiden/replace-tokens@v1
+        with:
+          files: '["data.tf"]'
+        env:
+          LAMBDA_EMAIL_SVC_ARN: ${{ vars.LAMBDA_ARN_EMAIL_SERVICE }}
+          EVENTBRIDGEROLE_EMAIL_SVC_ARN: ${{ vars.EVENTBRIDGELAMDBA_ARN_EMAIL_SERVICE }}
+          
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
 
