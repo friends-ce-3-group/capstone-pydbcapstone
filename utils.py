@@ -72,10 +72,10 @@ def utc_cron_generator(sg_date_time, from_timezone):
 #     return cron_expression
 
 
-def get_full_datetimestr(sendDate, sendTime, timezone):
+def get_full_datetimestr(sendDate, sendTime, tzone):
     sendDateTime = "{} {}".format(sendDate, sendTime)
     sendDateTime = datetime.strptime(sendDateTime, "%Y-%m-%d %H:%M:%S")
-    sendDateTime = sendDateTime.replace(tzinfo=timezone(timezone))
+    sendDateTime = sendDateTime.replace(tzinfo=timezone(tzone))
     return sendDateTime
 
 
