@@ -42,7 +42,7 @@ def utc_cron_generator(sg_date_time):
 
     # origin = origin.replace(tzinfo=timezone(from_timezone))
 
-    utc = sg_date_time.astimezone(timezone("UTC"))
+    utc = sg_date_time.astimezone(timezone("Europe/London"))
 
     min = utc.minute
     hr = utc.hour
