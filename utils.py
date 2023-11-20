@@ -35,7 +35,7 @@ def create_cloudwatch_event_rule(rule_name, cron_expression, role_arn, lambda_fu
 
     return response, status_code
 
-def utc_cron_generator(sg_date_time, from_timezone):
+def utc_cron_generator(sg_date_time):
     # format = "%Y-%m-%d %H:%M:%S"
 
     # origin = datetime.strptime(sg_date_time, format)
