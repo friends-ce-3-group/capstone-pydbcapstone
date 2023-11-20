@@ -82,5 +82,7 @@ def sendCardImpl(recipientName, recipientEmail, imagePath, sendDate, sendTime, s
     data, status_code = create_cloudwatch_event_rule(schedule_name, datetimecron, role_arn, lambda_function_arn, payload_json, access_key_id, access_key)
 
     data["cron expr"] = datetimecron
+    data["sendDate"] = sendDate
+    data['sendTime'] = sendTime
     
     return data, status_code
