@@ -1,5 +1,6 @@
 import boto3
 from dateutil import tz
+from pytz import timezone
 from datetime import datetime
 import statuscodes
 import json
@@ -35,10 +36,13 @@ def create_cloudwatch_event_rule(rule_name, cron_expression, role_arn, lambda_fu
     return response, status_code
 
 def utc_cron_generator(sg_date_time, from_timezone):
-    from_zone = tz.gettz(from_timezone)
-    to_zone = tz.gettz('UTC')
-    sg_date_time.replace(tzinfo=from_zone)
-    utc = sg_date_time.astimezone(to_zone)
+    format = "%Y-%m-%d %H:%M:%S"
+
+    origin = datetime.strptime(sg_date_time, format)
+
+    origin = origin.replace(tzinfo=timezone(from_timezone))
+
+    utc = origin.astimezone(timezone("UTC"))
 
     min = utc.minute
     hr = utc.hour
@@ -49,6 +53,23 @@ def utc_cron_generator(sg_date_time, from_timezone):
 
     cron_expression = "cron({} {} {} {} {} {})".format(min, hr, day_of_month, month, day_of_week, year)
     return cron_expression
+
+
+# def utc_cron_generator(sg_date_time, from_timezone):
+#     from_zone = tz.gettz(from_timezone)
+#     to_zone = tz.gettz('UTC')
+#     sg_date_time.replace(tzinfo=from_zone)
+#     utc = sg_date_time.astimezone(to_zone)
+
+#     min = utc.minute
+#     hr = utc.hour
+#     day_of_month = utc.day
+#     month = utc.month
+#     day_of_week = "?"
+#     year = utc.year
+
+#     cron_expression = "cron({} {} {} {} {} {})".format(min, hr, day_of_month, month, day_of_week, year)
+#     return cron_expression
 
 
 def get_full_datetimestr(sendDate, sendTime):
