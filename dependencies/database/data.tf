@@ -12,18 +12,18 @@ provider "aws" {
 }
 
 data "aws_db_instance" "db" {
-    tags = {
-        name = "friendscapstonerds"
-        proj_name = "friends-capstone"
-    }
+  tags = {
+    name      = "friendscapstonerds"
+    proj_name = "friends-capstone"
+  }
 }
 
 output "rds_address" {
-    value = data.aws_db_instance.db.address
+  value = data.aws_db_instance.db.address
 }
 
 output "rds_name" {
-    value = data.aws_db_instance.db.db_name
+  value = data.aws_db_instance.db.db_name
 }
 
 
@@ -31,7 +31,7 @@ data "template_file" "db_template" {
   template = file("${path.module}/../../.env.db")
   vars = {
     ENDPOINT = data.aws_db_instance.db.address
-    DBNAME = data.aws_db_instance.db.db_name
+    DBNAME   = data.aws_db_instance.db.db_name
   }
 }
 

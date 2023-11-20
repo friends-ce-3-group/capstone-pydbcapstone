@@ -40,4 +40,6 @@ def sendCardImpl(cardId, app):
 
         data, status_code = create_cloudwatch_event_rule(schedule_name, datetimecron, role_arn, lambda_function_arn, payload_json, access_key_id, access_key)
 
+        data["cron expr"] = datetimecron
+
     return data, status_code
