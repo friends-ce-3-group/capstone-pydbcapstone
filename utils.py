@@ -1,7 +1,7 @@
 import boto3
 from dateutil import tz
 from pytz import timezone
-from datetime import datetime
+from datetime import datetime, timedelta
 import statuscodes
 import json
 
@@ -43,6 +43,8 @@ def utc_cron_generator(sg_date_time):
     # origin = origin.replace(tzinfo=timezone(from_timezone))
 
     utc = sg_date_time.astimezone(timezone("Europe/London"))
+
+    utc = utc - timedelta(hours=1) # daylight savings now
 
     min = utc.minute
     hr = utc.hour
