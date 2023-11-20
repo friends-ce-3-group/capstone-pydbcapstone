@@ -36,13 +36,13 @@ def create_cloudwatch_event_rule(rule_name, cron_expression, role_arn, lambda_fu
     return response, status_code
 
 def utc_cron_generator(sg_date_time, from_timezone):
-    format = "%Y-%m-%d %H:%M:%S"
+    # format = "%Y-%m-%d %H:%M:%S"
 
-    origin = datetime.strptime(sg_date_time, format)
+    # origin = datetime.strptime(sg_date_time, format)
 
-    origin = origin.replace(tzinfo=timezone(from_timezone))
+    # origin = origin.replace(tzinfo=timezone(from_timezone))
 
-    utc = origin.astimezone(timezone("UTC"))
+    utc = sg_date_time.astimezone(timezone("UTC"))
 
     min = utc.minute
     hr = utc.hour
@@ -72,9 +72,10 @@ def utc_cron_generator(sg_date_time, from_timezone):
 #     return cron_expression
 
 
-def get_full_datetimestr(sendDate, sendTime):
+def get_full_datetimestr(sendDate, sendTime, timezone):
     sendDateTime = "{} {}".format(sendDate, sendTime)
     sendDateTime = datetime.strptime(sendDateTime, "%Y-%m-%d %H:%M:%S")
+    sendDateTime = sendDateTime.replace(tzinfo=timezone(timezone))
     return sendDateTime
 
 
@@ -93,8 +94,8 @@ def sendCardImpl(recipientName, recipientEmail, imagePath, sendDate, sendTime, s
     payload["recipientEmail"] = recipientEmail
     payload["imagePath"] = imagePath
     
-    datetimestr = get_full_datetimestr(sendDate, sendTime)
-    datetimecron = utc_cron_generator(datetimestr, sendTimezone)
+    datetimestr = get_full_datetimestr(sendDate, sendTime, sendTimezone)
+    datetimecron = utc_cron_generator(datetimestr)
 
     schedule_name = "{0}-{1}-{2}".format(payload["recipientName"], payload["recipientEmail"].replace("@","."), datetimestr.strftime("%m/%d/%Y-%H:%M:%S").replace("/","-").replace(":","-"))
 
