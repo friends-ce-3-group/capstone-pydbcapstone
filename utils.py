@@ -18,7 +18,7 @@ def create_cloudwatch_event_rule(rule_name, cron_expression, role_arn, lambda_fu
             FlexibleTimeWindow={
                 'Mode':'OFF' # OFF | FLEXIBLE
             },
-            GroupName='friends-capstone-schedule-group'
+            GroupName='friends-capstone-schedule-group',
             ScheduleExpression=cron_expression,
             # ScheduleExpressionTimezone="Europe/Paris",
             State='ENABLED',
