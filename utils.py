@@ -44,7 +44,7 @@ def utc_cron_generator(sg_date_time):
 
     utc = sg_date_time.astimezone(timezone("Europe/London"))
 
-    utc = utc - timedelta(hours=2) # daylight savings now
+    utc = utc - timedelta(hours=1) # daylight savings now
 
     min = utc.minute
     hr = utc.hour
