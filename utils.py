@@ -4,6 +4,8 @@ from pytz import timezone
 from datetime import datetime, timedelta
 import statuscodes
 import json
+import random
+import string
 
 def create_cloudwatch_event_rule(rule_name, cron_expression, role_arn, lambda_function_arn, payload_json, ACCESS_KEY_ID, ACCESS_KEY):
     
@@ -81,6 +83,11 @@ def get_full_datetimestr(sendDate, sendTime, tzone):
     sendDateTime = sendDateTime.replace(tzinfo=timezone(tzone))
     return sendDateTime
 
+def get_random_string(length):
+    # choose from all lowercase letter
+    letters = string.ascii_lowercase
+    result_str = ''.join(random.choice(letters) for i in range(length))
+    print("Random string of length", length, "is:", result_str)
 
 
 def sendCardImpl(recipientName, recipientEmail, imagePath, sendDate, sendTime, sendTimezone, config):
@@ -94,7 +101,7 @@ def sendCardImpl(recipientName, recipientEmail, imagePath, sendDate, sendTime, s
 
     payload = {}
 
-    recipientName = recipientName.replace(" ", "") 
+    recipientName = recipientName.replace(" ", "")
 
     payload["recipientName"] = recipientName
     payload["recipientEmail"] = recipientEmail
@@ -103,7 +110,9 @@ def sendCardImpl(recipientName, recipientEmail, imagePath, sendDate, sendTime, s
     datetimestr = get_full_datetimestr(sendDate, sendTime, sendTimezone)
     datetimecron = utc_cron_generator(datetimestr)
 
-    schedule_name = "{0}-{1}-{2}".format(payload["recipientName"], payload["recipientEmail"].replace("@","."), datetimestr.strftime("%m/%d/%Y-%H:%M:%S").replace("/","-").replace(":","-"))
+    str_append = get_random_string(8)
+
+    schedule_name = "{0}-{1}-{2}-{3}".format(payload["recipientName"], str_append, payload["recipientEmail"].replace("@","."), datetimestr.strftime("%m/%d/%Y-%H:%M:%S").replace("/","-").replace(":","-"))
 
     payload_json = json.dumps(payload)
 
