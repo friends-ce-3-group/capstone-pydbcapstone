@@ -93,6 +93,9 @@ def sendCardImpl(recipientName, recipientEmail, imagePath, sendDate, sendTime, s
     status_code = statuscodes.STATUS_ERR
 
     payload = {}
+
+    recipientName = recipientName.replace(" ", "") 
+
     payload["recipientName"] = recipientName
     payload["recipientEmail"] = recipientEmail
     payload["imagePath"] = imagePath
