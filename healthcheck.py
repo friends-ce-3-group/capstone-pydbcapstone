@@ -4,17 +4,10 @@ from endpoint_includes import *
 def healthcheck():
 
     data = {}
-
-    db = DBConnector(app)
-
-    status_code, message = db.healthcheck()
-
-    data["Msg from DB"] = message
+    status_code = statuscodes.STATUS_OK
 
     response = app.response_class(response=json.dumps(data),
                                   status=status_code,
                                   mimetype='application/json')
     
-    db.__del__()
-
     return response
