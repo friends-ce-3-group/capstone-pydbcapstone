@@ -78,5 +78,14 @@ class DBConnector:
 
         return data, status_code
 
+    def healthcheck(self):
+        message = "No connection with MYSQL database"
+        status_code = statuscodes.STATUS_ERR
+        if self.connection.is_connected():
+            status_code = statuscodes.STATUS_OK
+            message = "Connection with MYSQL database is healthy"
+        
+        return status_code, message
+
     def __del__(self):
         self.connection.close()
