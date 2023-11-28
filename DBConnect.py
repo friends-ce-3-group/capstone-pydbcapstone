@@ -4,7 +4,7 @@ import statuscodes
 class DBConnector:
     def __init__(self, app):
         self.connection = connector.connect(
-            host=app.config["ENDPOINT"],
+            host=app.config["PROXYENDPOINT"],
             user=app.config["DBUSER"],
             password=app.config["DBPASS"],
             database=app.config["DBNAME"],
