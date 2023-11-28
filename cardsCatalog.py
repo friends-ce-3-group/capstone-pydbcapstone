@@ -9,6 +9,8 @@ def cardsCatalog():
     else:
         db = DBConnector(app)
 
+        print("PROXYENDPOINT: ", app.config["PROXYENDPOINT"])
+
         CONST_TABLENAME = tablenames.CARDS_CATALOG_TABLE
 
         query = "SELECT * FROM {}".format(CONST_TABLENAME)

@@ -3,8 +3,6 @@ import statuscodes
 
 class DBConnector:
     def __init__(self, app):
-        print("PROXYENDPOINT: ", app.config["PROXYENDPOINT"])
-
         self.connection = connector.connect(
             host=app.config["ENDPOINT"],
             user=app.config["DBUSER"],
