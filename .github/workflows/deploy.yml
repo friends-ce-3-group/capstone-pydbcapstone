@@ -115,6 +115,7 @@ jobs:
         env:
           DBUSER: ${{ secrets.DB_USERNAME }}
           DBPASS: ${{ secrets.DB_PASSWORD }}
+          PROXYENDPOINT: ${{ vars.RDS_PROXY_ENDPOINT_ADDRESS }}
           ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
