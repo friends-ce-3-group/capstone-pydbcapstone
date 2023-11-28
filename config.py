@@ -5,7 +5,6 @@ basedir = path.abspath(path.dirname(__file__))
 load_dotenv(path.join(basedir, ".env"), override=True)
 
 ENDPOINT = environ.get("ENDPOINT")
-PROXYENDPOINT = environ.get("PROXYENDPOINT")
 DBUSER =  environ.get("DBUSER")
 DBPASS =  environ.get("DBPASS")
 DBNAME = environ.get("DBNAME")
