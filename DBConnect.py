@@ -4,7 +4,7 @@ import statuscodes
 class DBConnector:
     def __init__(self, app):
         self.connection = connector.connect(
-            host="friends-capstone-rds-rds-dbproxy.proxy-ccbqfspyybpn.us-west-2.rds.amazonaws.com",
+            host=app.config["PROXYENDPOINT"],
             user=app.config["DBUSER"],
             password=app.config["DBPASS"],
             database=app.config["DBNAME"],
