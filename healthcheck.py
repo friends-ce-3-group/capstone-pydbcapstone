@@ -3,7 +3,7 @@ from endpoint_includes import *
 @app.route('/api/healthcheck', methods=['GET'])
 def healthcheck():
 
-    data = {}
+    data = {"Performing healthcheck" : "/api/healthcheck"}
     status_code = statuscodes.STATUS_OK
 
     response = app.response_class(response=json.dumps(data),
