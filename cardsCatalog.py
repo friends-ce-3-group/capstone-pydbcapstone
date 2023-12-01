@@ -27,6 +27,8 @@ def cardsCatalog():
             data = { "Error": str(err) }
 
 
+        data["Task"] = "Access cardsCatalog"
+
         response = app.response_class(response=json.dumps(data),
                                     status=status_code,
                                     mimetype='application/json')
