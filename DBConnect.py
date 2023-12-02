@@ -3,12 +3,20 @@ import statuscodes
 
 class DBConnector:
     def __init__(self, app):
-        self.connection = connector.connect(
-            host=app.config["PROXYENDPOINT"],
-            user=app.config["DBUSER"],
-            password=app.config["DBPASS"],
-            database=app.config["DBNAME"],
-        )
+        try:
+            self.connection = connector.connect(
+                host=app.config["PROXYENDPOINT"],
+                user=app.config["DBUSER"],
+                password=app.config["DBPASS"],
+                database=app.config["DBNAME"],
+            )
+        except:
+            self.connection = connector.connect(
+                host=app.config["ENDPOINT"],
+                user=app.config["DBUSER"],
+                password=app.config["DBPASS"],
+                database=app.config["DBNAME"],
+            )
 
     def read(self, query : str) -> list:
         cursor = self.connection.cursor()
