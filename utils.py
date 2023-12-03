@@ -112,7 +112,7 @@ def sendCardImpl(recipientName, recipientEmail, imagePath, sendDate, sendTime, s
 
     str_append = get_random_string(8)
 
-    schedule_name = "{0}-{1}-{2}-{3}".format(payload["recipientName"], str_append, payload["recipientEmail"].replace("@","."), datetimestr.strftime("%m/%d/%Y-%H:%M:%S").replace("/","-").replace(":","-"))
+    schedule_name = "{0}-{1}-{2}-{3}".format(payload["recipientName"], str_append, payload["recipientEmail"].replace("@","").replace(".",""), datetimestr.strftime("%m/%d/%Y-%H:%M:%S").replace("/","-").replace(":","-"))
 
     payload_json = json.dumps(payload)
 
