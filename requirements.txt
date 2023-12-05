@@ -8,3 +8,4 @@ mysql-connector-python==8.2.0
 python-dotenv==1.0.0
 boto3==1.28.80
 datetime==5.3
+prometheus_flask_exporter
