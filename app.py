@@ -4,7 +4,7 @@ from prometheus_flask_exporter import PrometheusMetrics
 
 app = Flask(__name__)
 app.config.from_pyfile("config.py") # run this before any of the other imports to set up the configuration data
-metrics = PrometheusMetrics(app, path='/metrics')
+metrics = PrometheusMetrics(app, path='/api/metrics')
 
 #------------------------------------------------
 
@@ -23,4 +23,4 @@ import signCard     # curl -d '{"id" : "", "cardId" : "", "name" : "", "message"
 # import sendCard     # /api/sendCard?cardId=XXXX
 
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0')
+    app.run(debug=False, port=5000, host='0.0.0.0')
