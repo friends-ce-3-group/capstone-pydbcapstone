@@ -1,6 +1,7 @@
 from endpoint_includes import *
 
 @app.route('/api/healthcheck', methods=['GET'])
+@metrics.do_not_track()
 def healthcheck():
 
     data = {"Performing healthcheck" : "/api/healthcheck"}

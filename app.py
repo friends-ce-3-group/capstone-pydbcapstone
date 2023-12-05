@@ -4,7 +4,7 @@ from prometheus_flask_exporter import PrometheusMetrics
 
 app = Flask(__name__)
 app.config.from_pyfile("config.py") # run this before any of the other imports to set up the configuration data
-metrics = PrometheusMetrics(app)
+metrics = PrometheusMetrics(app, path='/metrics')
 
 #------------------------------------------------
 
